@@ -412,7 +412,9 @@ p { text-wrap: pretty; }
   .js .hero-media { clip-path: inset(0 0 100% 0 round var(--r-lg)); }
   .js .hero-media img { transform: scale(var(--zoom-hero-from)); }
   .js .arc-hero .arc-fill { transform: translateY(100%); }
-  .js .arc .arc-line { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  /* A linha se revela por um retângulo de recorte que cresce da esquerda (o tracejado
+     com non-scaling-stroke é medido em pixels da tela e parava em ~1200 px) */
+  .js .arc .arc-reveal { transform: scaleX(0); transform-box: fill-box; transform-origin: left center; }
 
   .hero.is-in .hero-title .line > span { transform: none; transition: transform var(--t-line) var(--ease-x); }
   .hero.is-in .hero-title .line:nth-child(2) > span { transition-delay: var(--d-line-2); }
@@ -422,10 +424,10 @@ p { text-wrap: pretty; }
   .hero.is-in .hero-media { clip-path: inset(0 0 0 0 round var(--r-lg)); transition: clip-path var(--t-mask) var(--ease-x) var(--d-hero-media); }
   .hero.is-in .hero-media img { transform: scale(1); transition: transform var(--t-zoom) var(--ease-x) var(--d-hero-media); }
   .hero.is-in .arc-hero .arc-fill { transform: none; transition: transform var(--t-arc-fill) var(--ease-x) var(--d-arc-fill); }
-  .hero.is-in .arc-hero .arc-line { stroke-dashoffset: 0; transition: stroke-dashoffset var(--t-arc) var(--ease-x) var(--d-arc-line); }
+  .hero.is-in .arc-hero .arc-reveal { transform: none; transition: transform var(--t-arc) var(--ease-x) var(--d-arc-line); }
 
   /* Arcos divisores */
-  [data-arc].is-in .arc-line { stroke-dashoffset: 0; transition: stroke-dashoffset var(--t-arc) var(--ease-x); }
+  [data-arc].is-in .arc-reveal { transform: none; transition: transform var(--t-arc) var(--ease-x); }
 
   /* Texto ao rolar */
   .js [data-reveal] { opacity: 0; transform: translateY(var(--rise)); }
