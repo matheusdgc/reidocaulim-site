@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Política de Privacidade | SB Rei do Caulim Representações</title>
+  <meta name="description" content="Como a SB Rei do Caulim Representações trata os dados enviados pelo formulário de contato do site.">
+  <meta name="theme-color" content="#00843D">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header is-scrolled">
+    <div class="container header-row">
+      <a class="brand" href="index.html" aria-label="SB Rei do Caulim, página inicial">
+        <img src="assets/img/logo-256.webp" width="256" height="256" alt="SB Rei do Caulim Representações">
+      </a>
+      <a class="btn btn-secondary btn-sm" href="index.html">Voltar ao site</a>
+    </div>
+  </header>
+
+  <main id="conteudo" class="page">
+    <div class="container">
+      <h1>Política de Privacidade</h1>
+      <p>Esta política explica como a SB Rei do Caulim Representações Ltda. trata os dados pessoais enviados pelo formulário de contato deste site, conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</p>
+
+      <h2>Quais dados coletamos</h2>
+      <p>Somente os que você digita no formulário: nome, empresa, e-mail, telefone, produto de interesse e mensagem. Registramos também a data do envio e o endereço IP, para evitar abusos.</p>
+
+      <h2>Para que usamos</h2>
+      <ul>
+        <li>Responder ao seu contato e enviar a cotação solicitada.</li>
+        <li>Manter o histórico do atendimento comercial.</li>
+      </ul>
+      <p>Não vendemos nem compartilhamos seus dados com terceiros para fins de marketing.</p>
+
+      <h2>Base legal</h2>
+      <p>O tratamento se baseia no seu consentimento, dado ao marcar a caixa de concordância no formulário, e em procedimentos preliminares a um contrato solicitados por você.</p>
+
+      <h2>Por quanto tempo guardamos</h2>
+      <p>Pelo tempo necessário ao atendimento e às obrigações legais. Depois disso, os dados são apagados.</p>
+
+      <h2>Cookies</h2>
+      <p>Este site não usa cookies de rastreamento nem ferramentas de publicidade. As fontes e imagens são servidas pelo próprio site.</p>
+
+      <h2>Seus direitos</h2>
+      <p>Você pode pedir a qualquer momento a confirmação, o acesso, a correção ou a exclusão dos seus dados, ou revogar o consentimento, escrevendo para <a class="link" href="mailto:contato@seudominio.com.br" data-email>contato@seudominio.com.br</a>.</p>
+
+      <h2>Contato</h2>
+      <p>SB Rei do Caulim Representações Ltda. CNPJ <span data-cnpj>00.000.000/0000-00</span>.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-legal">
+      <p>SB Rei do Caulim Representações Ltda.</p>
+      <p><a href="index.html">Voltar ao site</a></p>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script>
+    (function () {
+      var c = window.SITE_CONFIG || {};
+      document.querySelectorAll('[data-email]').forEach(function (a) { if (c.email) { a.href = 'mailto:' + c.email; a.textContent = c.email; } });
+      document.querySelectorAll('[data-cnpj]').forEach(function (el) { if (c.cnpj) el.textContent = c.cnpj; });
+    })();
+  </script>
+</body>
+</html>

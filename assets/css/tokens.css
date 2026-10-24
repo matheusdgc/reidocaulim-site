@@ -1,0 +1,128 @@
+/* Tokens do design system. Fonte: MASTER.md. Não use valores soltos fora daqui. */
+
+@font-face {
+  font-family: "Archivo";
+  src: url("../fonts/archivo-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Cores */
+  --color-bg: #FFFFFF;
+  --color-surface: #F4F7F3;
+  --color-surface-green: #E8F4EC;
+  --color-line: #E3E8E4;
+  --color-line-strong: #C5CEC8;
+  --color-line-input: #7A8580;
+  --focus-ring-inner: 0 0 0 2px var(--color-navy);
+  --color-ink: #0F1B2D;
+  --color-navy: #0B2A5B;
+  --color-muted: #4B5563;
+  --color-green: #00843D;
+  --color-green-deep: #006B32;
+  --color-green-press: #00562A;
+  --color-green-bright: #13A538;
+  --color-yellow: #FFD100;
+  --color-error: #B42318;
+  --color-success: #006B32;
+  --color-whatsapp: #25D366;
+  --color-disabled-bg: #C9D1CB;
+  --color-disabled-fg: #5B6660;
+  --color-on-dark: #FFFFFF;
+  --color-on-dark-muted: #C7D2E3;
+  --color-on-dark-line: rgba(255, 255, 255, .14);
+  --color-swatch-edge: rgba(15, 27, 45, .18);
+  --powder-shade: inset 0 -10px 16px rgba(15, 27, 45, .14), inset 0 6px 10px rgba(255, 255, 255, .7);
+
+  /* Cores do Caulim (aproximadas) */
+  --caulim-branco: #F3F2EC;
+  --caulim-creme: #E6D8B8;
+  --caulim-cinza: #B4B8B3;
+
+  /* Tipografia */
+  --font: "Archivo", "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+  --fs-display: clamp(2.5rem, 1.5rem + 4.2vw, 4.25rem);
+  --fs-h2: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  --fs-h3: clamp(1.375rem, 1.2rem + .6vw, 1.75rem);
+  --fs-lead: clamp(1.125rem, 1.05rem + .3vw, 1.25rem);
+  --fs-body: 1.0625rem;
+  --fs-small: .875rem;
+  --fs-tiny: .8125rem;
+  --wdth-display: 125%;
+  --wdth-sub: 110%;
+  --lh-tight: 1.05;
+  --lh-snug: 1.25;
+  --lh-body: 1.6;
+
+  /* Espaçamento (base 8 px) */
+  --sp-1: .25rem;
+  --sp-2: .5rem;
+  --sp-3: .75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+  --section-y: clamp(4rem, 2.5rem + 6vw, 8rem);
+  --container: 1200px;
+  --gutter: clamp(1rem, .5rem + 2.5vw, 2rem);
+  --header-h: 92px;
+
+  /* Raios */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-pill: 999px;
+
+  /* Sombras */
+  --sh-0: none;
+  --sh-1: 0 1px 2px rgba(11, 42, 91, .06);
+  --sh-2: 0 8px 24px -12px rgba(11, 42, 91, .18);
+  --sh-3: 0 18px 40px -20px rgba(11, 42, 91, .28);
+  --sh-btn: 0 6px 16px -6px rgba(0, 107, 50, .5);
+  --sh-float: 0 10px 24px -8px rgba(0, 0, 0, .35);
+
+  /* Movimento */
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --ease-x: cubic-bezier(.16, 1, .3, 1);
+  --ease-exit: cubic-bezier(.4, 0, 1, 1);
+  --t-micro: 160ms;
+  --t-ui: 240ms;
+  --t-reveal: 420ms;
+  --t-ripple: 600ms;
+  --t-line: 900ms;
+  --t-mask: 1000ms;
+  --t-zoom: 1400ms;
+  --t-arc: 1100ms;
+  --t-fade-reduced: 200ms;
+  --t-underline: 700ms;
+  --t-arc-fill: 800ms;
+  --t-spin: 700ms;
+  --t-reduced: 1ms;
+  --d-hero-media: 150ms;
+  --d-hero-copy: 380ms;
+  --d-hero-actions: 460ms;
+  --d-arc-fill: 500ms;
+  --d-arc-line: 700ms;
+  --d-line-2: 90ms;
+  --d-wa: 1200ms;
+  --zoom-from: 1.12;
+  --zoom-hero-from: 1.15;
+  --parallax-scale: 1.18;
+  --stagger: 70ms;
+  --rise: 16px;
+  --tilt-max: 4deg;
+  --parallax-max: 8%;
+
+  /* Camadas */
+  --z-header: 50;
+  --z-float: 60;
+  --z-skip: 100;
+}

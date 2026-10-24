@@ -1,0 +1,11 @@
+{
+  "name": "SB Rei do Caulim Representações",
+  "short_name": "Rei do Caulim",
+  "icons": [
+    { "src": "assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "assets/img/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#00843D",
+  "background_color": "#FFFFFF",
+  "display": "browser"
+}
