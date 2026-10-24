@@ -56,3 +56,7 @@ php -S localhost:8000
 ## Acessibilidade e movimento
 
 As animações respeitam a preferência do sistema por movimento reduzido: com ela ativada, tudo vira um fade simples, sem partículas, parallax ou inclinação. Os detalhes de tempos e curvas estão no `MASTER.md`.
+
+## Cache e atualizações
+
+CSS e JavaScript são conferidos pelo navegador a cada acesso, e os links levam um número de versão (`?v=2`) em `index.html`, `privacidade.html` e `404.html`. Imagens e fontes ficam em cache por 30 dias (Vercel) ou 6 meses (Apache): ao trocar uma imagem, use um nome de arquivo novo.
