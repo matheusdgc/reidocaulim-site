@@ -15,5 +15,8 @@ window.SITE_CONFIG = {
   // TODO: cidade e estado de atendimento
   cidade: 'Cidade / UF',
   // TODO: CNPJ
-  cnpj: '00.000.000/0000-00'
+  cnpj: '00.000.000/0000-00',
+  // Modo demonstração: o formulário valida, mas não envia e-mail.
+  // 'auto' liga só em endereços *.vercel.app (protótipo). Use false na hospedagem final, se preferir.
+  modoDemonstracao: 'auto'
 };

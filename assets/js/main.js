@@ -355,6 +355,16 @@
       if (invalid.length) { form.elements[invalid[0]].focus(); return; }
 
       setLoading(true);
+      const demo = cfg.modoDemonstracao === true
+        || (cfg.modoDemonstracao === 'auto' && location.hostname.endsWith('.vercel.app'));
+      if (demo) {
+        await new Promise((resolve) => setTimeout(resolve, 600));
+        form.reset();
+        lastPrefill = '';
+        setLoading(false);
+        setStatus('Protótipo: o formulário está funcionando, e o envio por e-mail será ativado na hospedagem final.', 'success');
+        return;
+      }
       try {
         const res = await fetch(form.action, {
           method: 'POST',
