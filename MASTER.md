@@ -62,7 +62,7 @@ Fonte única de verdade do visual do site. Todo valor usado no CSS sai daqui, vi
 | `--fs-lead` | `clamp(1.125rem, 1.05rem + .3vw, 1.25rem)` |
 | `--fs-body` | `1.0625rem` (17 px) |
 | `--fs-small` | `.875rem` |
-| `--fs-tiny` | `.8125rem` |
+| `--fs-tiny` | `.875rem` (mínimo de 14 px no site) |
 
 ## Espaçamento (base 8 px)
 

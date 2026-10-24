@@ -95,22 +95,34 @@
         if (a) a.setAttribute('aria-current', 'true');
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
-    links.forEach((_, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+    // A abertura não tem link no menu: ao voltar para ela, nenhum item fica ativo
+    ['inicio', ...links.keys()].forEach((id) => { const s = document.getElementById(id); if (s) io.observe(s); });
   }
 
   /* ---------- Abertura ---------- */
   function initHero() {
     const hero = $('[data-hero]');
     if (!hero) return;
+    // O Chrome não cria transição para elementos que ainda não foram pintados: se a classe
+    // entrar antes do primeiro quadro, a abertura pula direto para o estado final.
+    // Por isso a entrada espera a fonte (ou 800 ms), a aba visível e dois quadros pintados.
     let started = false;
     const start = () => {
       if (started) return;
       started = true;
-      void hero.offsetWidth; // garante que o estado inicial foi aplicado antes da transição
       hero.classList.add('is-in');
     };
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
-    setTimeout(start, 600);
+    const afterPaint = () => requestAnimationFrame(() => requestAnimationFrame(start));
+    const whenVisible = () => {
+      if (!document.hidden) { afterPaint(); return; }
+      document.addEventListener('visibilitychange', function onVisible() {
+        if (document.hidden) return;
+        document.removeEventListener('visibilitychange', onVisible);
+        afterPaint();
+      });
+    };
+    const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    Promise.race([fontsReady, new Promise((resolve) => setTimeout(resolve, 800))]).then(whenVisible);
   }
 
   /* ---------- Revelações ao rolar ---------- */

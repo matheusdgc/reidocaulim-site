@@ -51,7 +51,7 @@
   --fs-lead: clamp(1.125rem, 1.05rem + .3vw, 1.25rem);
   --fs-body: 1.0625rem;
   --fs-small: .875rem;
-  --fs-tiny: .8125rem;
+  --fs-tiny: .875rem;
   --wdth-display: 125%;
   --wdth-sub: 110%;
   --lh-tight: 1.05;

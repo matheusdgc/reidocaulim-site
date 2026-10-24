@@ -5,7 +5,7 @@ DirectoryIndex index.html
 ErrorDocument 404 /404.html
 
 # Bloqueia arquivos internos do projeto
-<FilesMatch "^(MASTER\.md|README\.md|\.git.*|sb-reidocaulim-logo\.jpeg)$">
+<FilesMatch "^(MASTER\.md|README\.md|\.git.*|sb-reidocaulim-logo2?\.jpeg)$">
   Require all denied
 </FilesMatch>
 
