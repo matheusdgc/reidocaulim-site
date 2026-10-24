@@ -75,6 +75,7 @@
   --header-h: 92px;
 
   /* Raios */
+  --border-hero: 5px;
   --r-xs: 4px;
   --r-sm: 8px;
   --r-md: 12px;

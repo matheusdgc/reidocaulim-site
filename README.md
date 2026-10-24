@@ -29,7 +29,7 @@ Procure por `TODO` no projeto. São quatro lugares:
 1. **`assets/js/config.js`**: número de WhatsApp, telefone escrito, e-mail público, cidade/UF e CNPJ.
 2. **`enviar.php`**: `DESTINO` (e-mail que recebe as mensagens) e `REMETENTE` (um endereço do mesmo domínio do site, por exemplo `site@seudominio.com.br`, senão o e-mail tende a cair no spam).
 3. **Domínio**: troque `https://www.seudominio.com.br` em `index.html` (canonical e Open Graph), `sitemap.xml` e `robots.txt`.
-4. **Cores do Caulim**: os tons de Branco, Creme 2 e Cinza em `assets/css/tokens.css` (`--caulim-branco`, `--caulim-creme`, `--caulim-cinza`) são aproximados. Ajuste com uma amostra real.
+4. **Cores do Caulim**: os tons de Branco, Creme e Cinza em `assets/css/tokens.css` (`--caulim-branco`, `--caulim-creme`, `--caulim-cinza`) são aproximados. Ajuste com uma amostra real.
 
 ## Como publicar
 

@@ -99,6 +99,12 @@ if (mb_strlen($nome, 'UTF-8') < 2) {
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $erros['email'] = 'Informe um e-mail válido.';
 }
+if (mb_strlen($empresa, 'UTF-8') < 2) {
+    $erros['empresa'] = 'Informe o nome da empresa.';
+}
+if (strlen(preg_replace('/\D/', '', $telefone) ?? '') < 10) {
+    $erros['telefone'] = 'Informe telefone ou WhatsApp com DDD.';
+}
 if (mb_strlen($mensagem, 'UTF-8') < 10) {
     $erros['mensagem'] = 'Escreva uma mensagem com pelo menos 10 caracteres.';
 }
@@ -116,9 +122,9 @@ $corpo = implode("\n", [
     'Nova mensagem enviada pelo formulário do site.',
     '',
     'Nome: ' . $nome,
-    'Empresa: ' . ($empresa !== '' ? $empresa : '-'),
+    'Empresa: ' . $empresa,
     'E-mail: ' . $email,
-    'Telefone: ' . ($telefone !== '' ? $telefone : '-'),
+    'Telefone: ' . $telefone,
     'Produto: ' . $produto,
     '',
     'Mensagem:',

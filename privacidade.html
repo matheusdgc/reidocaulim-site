@@ -68,6 +68,8 @@
       var c = window.SITE_CONFIG || {};
       document.querySelectorAll('[data-email]').forEach(function (a) { if (c.email) { a.href = 'mailto:' + c.email; a.textContent = c.email; } });
       document.querySelectorAll('[data-cnpj]').forEach(function (el) { if (c.cnpj) el.textContent = c.cnpj; });
+      var demo = c.modoDemonstracao === true || (c.modoDemonstracao === 'auto' && /\.vercel\.app$/.test(location.hostname));
+      if (demo) { var b = document.createElement('p'); b.className = 'proto-badge'; b.setAttribute('role', 'note'); b.textContent = 'Protótipo para aprovação'; document.body.appendChild(b); }
     })();
   </script>
 </body>

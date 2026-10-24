@@ -5,11 +5,14 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const reducedQuery = matchMedia('(prefers-reduced-motion: reduce)');
+  // Protótipo: 'auto' liga só em endereços *.vercel.app (ver config.js)
+  const isDemo = () => cfg.modoDemonstracao === true
+    || (cfg.modoDemonstracao === 'auto' && location.hostname.endsWith('.vercel.app'));
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   const cssVar = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
   /* ---------- Dados de contato (config.js) ---------- */
-  const caulimChoice = { cor: 'Branco', embalagem: 'Saco de 25 kg' };
+  const caulimChoice = { cor: 'Branco', embalagem: 'Saca de 25 kg' };
 
   function waMessage(product) {
     if (product === 'Caulim') {
@@ -22,13 +25,13 @@
   function updateWhatsLinks() {
     if (!cfg.whatsapp) return;
     $$('[data-wa]').forEach((a) => {
-      a.href = `https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent(waMessage(a.dataset.waProduct))}`;
+      const number = a.dataset.waNumber || cfg.whatsapp;
+      a.href = `https://wa.me/${number}?text=${encodeURIComponent(waMessage(a.dataset.waProduct))}`;
     });
   }
 
   function applyConfig() {
     updateWhatsLinks();
-    if (cfg.whatsappTexto) $$('[data-phone-text]').forEach((el) => { el.textContent = cfg.whatsappTexto; });
     if (cfg.email) {
       $$('[data-email]').forEach((a) => { a.href = `mailto:${cfg.email}`; a.textContent = cfg.email; });
     }
@@ -312,7 +315,9 @@
 
     const rules = {
       nome: (v) => (v.trim().length >= 2 ? '' : 'Informe seu nome.'),
+      empresa: (v) => (v.trim().length >= 2 ? '' : 'Informe o nome da empresa.'),
       email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Informe um e-mail válido.'),
+      telefone: (v) => (v.replace(/\D/g, '').length >= 10 ? '' : 'Informe telefone ou WhatsApp com DDD.'),
       mensagem: (v) => (v.trim().length >= 10 ? '' : 'Escreva uma mensagem com pelo menos 10 caracteres.'),
       lgpd: (_, el) => (el.checked ? '' : 'É preciso concordar para enviarmos o retorno.')
     };
@@ -355,9 +360,7 @@
       if (invalid.length) { form.elements[invalid[0]].focus(); return; }
 
       setLoading(true);
-      const demo = cfg.modoDemonstracao === true
-        || (cfg.modoDemonstracao === 'auto' && location.hostname.endsWith('.vercel.app'));
-      if (demo) {
+      if (isDemo()) {
         await new Promise((resolve) => setTimeout(resolve, 600));
         form.reset();
         lastPrefill = '';
@@ -395,7 +398,18 @@
     if (params.has('erro')) setStatus('Não foi possível enviar. Confira os campos e tente de novo.', 'error');
   }
 
+  /* ---------- Selo de protótipo ---------- */
+  function initDemoBadge() {
+    if (!isDemo()) return;
+    const badge = document.createElement('p');
+    badge.className = 'proto-badge';
+    badge.setAttribute('role', 'note');
+    badge.textContent = 'Protótipo para aprovação';
+    document.body.appendChild(badge);
+  }
+
   applyConfig();
+  initDemoBadge();
   initHeader();
   initHero();
   initReveals();

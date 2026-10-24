@@ -133,10 +133,13 @@ p { text-wrap: pretty; }
   font-style: normal; color: var(--color-green);
   background: linear-gradient(var(--color-yellow), var(--color-yellow)) 0 92% / 100% .16em no-repeat;
 }
-.hero-lead { font-size: var(--fs-lead); color: var(--color-muted); max-width: 34rem; margin: var(--sp-5) 0 var(--sp-6); }
+.hero-lead { display: grid; gap: var(--sp-3); font-size: var(--fs-lead); color: var(--color-muted); max-width: 36rem; margin: var(--sp-5) 0 var(--sp-6); }
+.hero-lead strong { color: var(--color-green-deep); font-weight: 700; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
-.hero-media { position: relative; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 3.2; box-shadow: var(--sh-3); }
-.hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%; }
+.hero .hero-actions { margin-top: var(--sp-6); }
+/* A moldura segue a proporção da foto (3:2), sem cortar nada */
+.hero-media { position: relative; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--sh-3); border: var(--border-hero) solid var(--color-green); }
+.hero-media img { width: 100%; height: auto; }
 
 .arc { position: absolute; left: 0; right: 0; width: 100%; pointer-events: none; }
 .arc .arc-line { fill: none; stroke: var(--color-yellow); stroke-width: 7; vector-effect: non-scaling-stroke; }
@@ -149,7 +152,6 @@ p { text-wrap: pretty; }
 @media (max-width: 899px) {
   .hero { padding-top: var(--sp-6); }
   .hero-grid { grid-template-columns: 1fr; gap: var(--sp-6); }
-  .hero-media { aspect-ratio: 16 / 10; }
 }
 
 /* ---------- A empresa ---------- */
@@ -157,6 +159,7 @@ p { text-wrap: pretty; }
 .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--sp-8); align-items: start; }
 .about-text h2 { margin-bottom: var(--sp-5); }
 .about-text .lead { margin-bottom: var(--sp-4); }
+.about-text .lead strong { color: var(--color-green-deep); font-weight: 700; }
 .about-text p:not(.lead) { color: var(--color-muted); }
 .steps { display: grid; gap: var(--sp-3); counter-reset: none; }
 .step {
@@ -180,10 +183,11 @@ p { text-wrap: pretty; }
 
 /* ---------- Produtos ---------- */
 .products { padding-top: var(--sp-8); }
-.section-head { max-width: 46rem; margin-bottom: var(--sp-8); }
-.section-head h2 { margin-bottom: var(--sp-3); }
 
 .product { display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--sp-8); align-items: center; }
+.product-visual { display: grid; gap: var(--sp-3); min-width: 0; }
+.maker-link { justify-self: start; display: inline-block; padding-block: var(--sp-1); font-size: var(--fs-small); font-stretch: var(--wdth-display); font-weight: 800; letter-spacing: .06em; color: var(--color-navy); text-decoration: none; border-bottom: 2px solid var(--color-yellow); transition: color var(--t-micro) var(--ease), border-color var(--t-micro) var(--ease); }
+.maker-link:hover { color: var(--color-green-deep); border-color: var(--color-green); }
 .product-media {
   position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--color-surface);
   aspect-ratio: 1400 / 803; perspective: 900px; isolation: isolate;
@@ -273,6 +277,8 @@ p { text-wrap: pretty; }
 .specs dd { font-weight: 700; color: var(--color-navy); line-height: var(--lh-snug); }
 
 /* ACM Liga */
+.acm-intro { max-width: 46rem; margin-bottom: var(--sp-7); font-size: var(--fs-h3); font-stretch: var(--wdth-sub); font-weight: 600; line-height: var(--lh-snug); color: var(--color-navy); text-wrap: balance; }
+.acm-intro strong { color: var(--color-green-deep); font-weight: 800; }
 .product-alt { grid-template-columns: 1fr 1fr; }
 .applications { margin-top: var(--sp-5); }
 .applications h4 { font-size: var(--fs-small); font-stretch: 100%; font-weight: 700; color: var(--color-ink); letter-spacing: 0; margin-bottom: var(--sp-2); }
@@ -305,14 +311,6 @@ p { text-wrap: pretty; }
   .product-actions .btn { flex: 1 1 100%; }
 }
 
-/* ---------- Faixa de chamada ---------- */
-.cta-band { position: relative; background: var(--color-green); color: var(--color-on-dark); padding-block: var(--sp-9) calc(var(--sp-9) + var(--sp-4)); overflow: hidden; }
-.cta-inner { max-width: 52rem; text-align: center; display: grid; justify-items: center; gap: var(--sp-4); }
-.cta-band h2 { color: var(--color-on-dark); }
-.cta-band p { font-size: var(--fs-lead); }
-.cta-band .hero-actions { justify-content: center; margin-top: var(--sp-3); }
-.arc-cta { bottom: var(--sp-5); height: clamp(32px, 5vw, 60px); }
-.arc-cta .arc-line { stroke-width: 5; }
 
 /* ---------- Contato ---------- */
 .contact { background: var(--color-surface); }
@@ -325,6 +323,7 @@ p { text-wrap: pretty; }
 .contact-label { display: block; font-size: var(--fs-tiny); color: var(--color-muted); }
 .contact-list a, .contact-list span:not(.contact-label) { font-weight: 700; color: var(--color-navy); text-decoration: none; overflow-wrap: anywhere; }
 .contact-list a { transition: color var(--t-micro) var(--ease); }
+.contact-phones { display: grid; gap: var(--sp-1); }
 .contact-list a:hover { color: var(--color-green-deep); text-decoration: underline; text-underline-offset: 3px; }
 
 .form { display: grid; gap: var(--sp-4); padding: clamp(var(--sp-5), 4vw, var(--sp-7)); border-radius: var(--r-lg); background: var(--color-bg); box-shadow: var(--sh-2); }
@@ -391,6 +390,17 @@ p { text-wrap: pretty; }
 .wa-float svg { width: 32px; height: 32px; }
 .wa-float:active { transform: scale(.96); }
 @media (hover: hover) and (pointer: fine) { .wa-float:hover { transform: scale(1.06); } }
+
+/* ---------- Selo de protótipo (só no modo demonstração) ---------- */
+.proto-badge {
+  position: fixed; z-index: var(--z-float);
+  left: calc(env(safe-area-inset-left) + var(--sp-4)); bottom: calc(env(safe-area-inset-bottom) + var(--sp-5));
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4); border-radius: var(--r-pill);
+  background: var(--color-navy); color: var(--color-on-dark); box-shadow: var(--sh-2);
+  font-size: var(--fs-tiny); font-weight: 700; letter-spacing: .02em; pointer-events: none;
+}
+.proto-badge::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--color-yellow); }
 
 /* ---------- Páginas simples (privacidade, 404) ---------- */
 .page { padding-block: var(--sp-8) var(--section-y); }
@@ -469,3 +479,6 @@ p { text-wrap: pretty; }
 /* Área de toque mínima (WCAG 2.5.8) para links fora de frases */
 .site-footer li a, .contact-list a { display: inline-block; padding-block: var(--sp-1); min-height: 24px; }
 .field-check input { width: 24px; height: 24px; }
+
+/* Com o selo de protótipo, o rodapé ganha espaço para o texto legal não ficar coberto */
+body:has(.proto-badge) .footer-legal { padding-bottom: calc(var(--sp-9) + env(safe-area-inset-bottom)); }
