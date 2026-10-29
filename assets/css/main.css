@@ -255,7 +255,6 @@ p { text-wrap: pretty; }
   content: ""; position: absolute; left: 0; top: .2em; width: 22px; height: 22px; border-radius: 50%;
   background: var(--color-surface-green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23006B32' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 14px no-repeat;
 }
-.checks-2col { grid-template-columns: 1fr 1fr; column-gap: var(--sp-5); margin-block: var(--sp-5) var(--sp-6); }
 
 .use-crop { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); align-items: center; }
 .use-band { grid-column: 1 / -1; grid-row: 1; height: clamp(420px, 40vw, 560px); border-radius: var(--r-lg); overflow: hidden; }
@@ -279,19 +278,8 @@ p { text-wrap: pretty; }
 .acm-intro { max-width: 46rem; margin-bottom: var(--sp-7); font-size: var(--fs-h3); font-stretch: var(--wdth-sub); font-weight: 600; line-height: var(--lh-snug); color: var(--color-navy); text-wrap: balance; }
 .acm-intro strong { color: var(--color-green-deep); font-weight: 800; }
 /* Catálogo ACM Argamassas */
+.acm-title { margin-bottom: var(--sp-5); }
 .acm-more { margin-top: var(--sp-7); }
-/* Página ACM Argamassas */
-.page-hero { padding: var(--sp-8) 0 var(--sp-6); }
-.page-hero h1 { font-size: var(--fs-display); margin: var(--sp-3) 0 var(--sp-4); }
-.page-hero .lead { max-width: 44rem; }
-.page-hero .lead strong { color: var(--color-green-deep); font-weight: 700; }
-.breadcrumb { display: flex; flex-wrap: wrap; gap: var(--sp-2); font-size: var(--fs-small); color: var(--color-muted); }
-.breadcrumb a { color: var(--color-green-deep); text-decoration: underline; text-underline-offset: 3px; }
-.catalog { padding-top: var(--sp-7); }
-.catalog-cta { padding-block: var(--sp-8) var(--section-y); background: var(--color-surface); }
-.catalog-cta-inner { display: grid; justify-items: center; gap: var(--sp-4); text-align: center; }
-.catalog-cta p { font-size: var(--fs-lead); color: var(--color-muted); max-width: 40rem; }
-.catalog-cta .hero-actions { justify-content: center; margin-top: var(--sp-2); }
 .catalog-filters { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-6); }
 .filter {
   display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 44px; padding: var(--sp-2) var(--sp-4);
@@ -329,32 +317,17 @@ p { text-wrap: pretty; }
   .catalog-card:hover .catalog-img img { transform: scale(1.03); }
 }
 
-.product-alt { grid-template-columns: 1fr 1fr; }
-.applications { margin-top: var(--sp-5); }
-.applications h4 { font-size: var(--fs-small); font-stretch: 100%; font-weight: 700; color: var(--color-ink); letter-spacing: 0; margin-bottom: var(--sp-2); }
-.tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
-.tags li { padding: var(--sp-1) var(--sp-3); border: 1px solid var(--color-line); border-radius: var(--r-pill); font-size: var(--fs-small); background: var(--color-surface); }
-.acm-media { position: relative; perspective: 900px; }
-.acm-media::before {
-  content: ""; position: absolute; inset: var(--sp-6) calc(var(--sp-6) * -1) calc(var(--sp-6) * -1) var(--sp-6);
-  border-radius: var(--r-lg); background: var(--color-surface-green);
-}
-.acm-scene { position: relative; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 1; box-shadow: var(--sh-3); }
-.acm-scene img { width: 100%; height: 100%; object-fit: cover; }
 
 @media (max-width: 959px) {
-  .product, .product-alt, .use-feed { grid-template-columns: 1fr; gap: var(--sp-6); }
-  .product-alt .product-visual { order: -1; }
+  .product, .use-feed { grid-template-columns: 1fr; gap: var(--sp-6); }
   .photo-inset { right: 0; }
   .use-band { height: 300px; }
   .use-card { grid-column: 1 / -1; grid-row: 2; margin: calc(var(--sp-8) * -1) var(--sp-4) 0; }
   .specs { grid-template-columns: 1fr 1fr; }
   .specs > div:nth-child(3) { border-left: 0; }
   .specs > div:nth-child(n+3) { border-top: 1px solid var(--color-line); }
-  .acm-media { max-width: 520px; margin-right: var(--sp-6); }
 }
 @media (max-width: 560px) {
-  .checks-2col { grid-template-columns: 1fr; }
   .specs { grid-template-columns: 1fr; }
   .specs > div + div { border-left: 0; border-top: 1px solid var(--color-line); }
   .powder-label { display: none; }
@@ -504,10 +477,9 @@ p { text-wrap: pretty; }
   .js [data-mask] > img { transform: scale(var(--zoom-from)); }
   .js [data-mask].is-in { clip-path: inset(0 0 0 0 round var(--r-md)); transition: clip-path var(--t-mask) var(--ease-x) var(--delay, 0ms); }
   .js [data-mask].is-in > img { transform: scale(1); transition: transform var(--t-zoom) var(--ease-x) var(--delay, 0ms); }
-  .js .product-media[data-mask], .js .use-band[data-mask], .js .acm-scene[data-mask] { clip-path: inset(0 100% 0 0 round var(--r-lg)); }
-  .js .product-media[data-mask].is-in, .js .use-band[data-mask].is-in, .js .acm-scene[data-mask].is-in { clip-path: inset(0 0 0 0 round var(--r-lg)); }
+  .js .product-media[data-mask], .js .use-band[data-mask] { clip-path: inset(0 100% 0 0 round var(--r-lg)); }
+  .js .product-media[data-mask].is-in, .js .use-band[data-mask].is-in { clip-path: inset(0 0 0 0 round var(--r-lg)); }
   .js .product-media[data-mask] > img.tilt-target { transform: none; }
-  .js .acm-scene.tilt-target.is-in { transition: clip-path var(--t-mask) var(--ease-x) var(--delay, 0ms), transform var(--t-ui) var(--ease); }
 
   /* Parallax sutil (navegadores com scroll-driven animations) */
   @supports (animation-timeline: view()) {

@@ -364,7 +364,7 @@
         figure.appendChild(img);
       }
       const body = el('div', 'catalog-body');
-      body.append(el('span', 'catalog-cat', it.categoria), el('h2', 'catalog-name', it.nome), el('p', 'catalog-desc', it.resumo));
+      body.append(el('span', 'catalog-cat', it.categoria), el('h3', 'catalog-name', it.nome), el('p', 'catalog-desc', it.resumo));
       art.append(figure, body);
       li.appendChild(art);
       return li;

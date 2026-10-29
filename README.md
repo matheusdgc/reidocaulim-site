@@ -59,13 +59,13 @@ As animações respeitam a preferência do sistema por movimento reduzido: com e
 
 ## Cache e atualizações
 
-CSS e JavaScript são conferidos pelo navegador a cada acesso, e os links levam um número de versão (`?v=4`) em `index.html`, `acm-argamassas.html`, `privacidade.html` e `404.html`. Imagens e fontes ficam em cache por 30 dias (Vercel) ou 6 meses (Apache): ao trocar uma imagem, use um nome de arquivo novo.
+CSS e JavaScript são conferidos pelo navegador a cada acesso, e os links levam um número de versão (`?v=5`) em `index.html`, `privacidade.html` e `404.html`. Imagens e fontes ficam em cache por 30 dias (Vercel) ou 6 meses (Apache): ao trocar uma imagem, use um nome de arquivo novo.
 
 ## Catálogo ACM Argamassas
 
-A seção "Linha completa" mostra todos os produtos de alvaxaditivos.com.br/produtos. A cada visita, o site busca a lista atual na API pública do fabricante (`/wp-json/wp/v2/product`), então produtos novos, removidos ou alterados lá aparecem aqui sem mexer no código.
+A seção ACM Argamassas da página inicial mostra todos os produtos de alvaxaditivos.com.br/produtos. A cada visita, o site busca a lista atual na API pública do fabricante (`/wp-json/wp/v2/product`), então produtos novos, removidos ou alterados lá aparecem aqui sem mexer no código.
 
-A página também traz uma cópia da lista, usada se a busca falhar e lida pelos buscadores. A seção fica na página `acm-argamassas.html`. Para atualizar essa cópia, edite `assets/data/acm-produtos.json` e rode:
+O `index.html` também traz uma cópia da lista, usada se a busca falhar e lida pelos buscadores. Para atualizar essa cópia, edite `assets/data/acm-produtos.json` e rode:
 
 ```bash
 python scripts/gerar_catalogo.py

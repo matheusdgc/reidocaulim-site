@@ -9,6 +9,12 @@ ErrorDocument 404 /404.html
   Require all denied
 </FilesMatch>
 
+# A antiga página de produtos ACM Argamassas virou uma seção da página inicial
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^acm-argamassas\.html$ /#acm-argamassas [NE,R=301,L]
+</IfModule>
+
 # HTTPS obrigatório (descomente depois que o certificado SSL estiver ativo)
 # RewriteEngine On
 # RewriteCond %{HTTPS} off
