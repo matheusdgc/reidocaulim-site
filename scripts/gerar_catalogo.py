@@ -1,11 +1,11 @@
-"""Gera a cópia estática do catálogo ACM Argamassas dentro do index.html.
+"""Gera a cópia estática do catálogo ACM Argamassas dentro do acm-argamassas.html.
 
 O site já busca a lista atualizada no site do fabricante a cada visita (assets/js/main.js).
 Esta cópia só aparece se essa busca falhar e é o que buscadores leem.
 
 Uso: python scripts/gerar_catalogo.py
 Lê assets/data/acm-produtos.json e reescreve o trecho entre os marcadores
-<!-- catalogo:inicio --> e <!-- catalogo:fim --> do index.html.
+<!-- catalogo:inicio --> e <!-- catalogo:fim --> do acm-argamassas.html.
 """
 import html
 import json
@@ -15,8 +15,8 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 DADOS = RAIZ / "assets" / "data" / "acm-produtos.json"
-PAGINA = RAIZ / "index.html"
-INDENT = "            "
+PAGINA = RAIZ / "acm-argamassas.html"
+INDENT = "          "
 
 
 def slug(texto):
@@ -42,9 +42,8 @@ def card(p):
         f'{INDENT}      <div class="catalog-img"><img src="{e(p["imagem"])}" width="{p["imagemW"]}" height="{p["imagemH"]}" loading="lazy" alt="Embalagem do {e(p["nome"])}"></div>\n'
         f'{INDENT}      <div class="catalog-body">\n'
         f'{INDENT}        <span class="catalog-cat">{e(p["categoria"])}</span>\n'
-        f'{INDENT}        <h4 class="catalog-name">{e(p["nome"])}</h4>\n'
+        f'{INDENT}        <h2 class="catalog-name">{e(p["nome"])}</h2>\n'
         f'{INDENT}        <p class="catalog-desc">{e(p["resumo"])}</p>\n'
-        f'{INDENT}        <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="{e(p["nome"])}">Solicitar cotação</a>\n'
         f'{INDENT}      </div>\n'
         f'{INDENT}    </article>\n'
         f'{INDENT}  </li>'
@@ -65,9 +64,9 @@ def main():
     novo, n = re.subn(r"(<!-- catalogo:inicio -->\n).*?( *<!-- catalogo:fim -->)",
                       lambda m: m.group(1) + bloco + "\n" + m.group(2), pagina, count=1, flags=re.S)
     if n != 1:
-        raise SystemExit("Marcadores <!-- catalogo:inicio --> e <!-- catalogo:fim --> não encontrados no index.html")
+        raise SystemExit("Marcadores <!-- catalogo:inicio --> e <!-- catalogo:fim --> não encontrados no acm-argamassas.html")
     PAGINA.write_text(novo, encoding="utf-8")
-    print(f"{len(produtos)} produtos escritos no index.html")
+    print(f"{len(produtos)} produtos escritos no acm-argamassas.html")
 
 
 if __name__ == "__main__":

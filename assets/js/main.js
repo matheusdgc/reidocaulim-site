@@ -364,10 +364,7 @@
         figure.appendChild(img);
       }
       const body = el('div', 'catalog-body');
-      const btn = el('a', 'btn btn-secondary btn-sm', 'Solicitar cotação');
-      btn.href = '#contato';
-      btn.dataset.quoteItem = it.nome;
-      body.append(el('span', 'catalog-cat', it.categoria), el('h4', 'catalog-name', it.nome), el('p', 'catalog-desc', it.resumo), btn);
+      body.append(el('span', 'catalog-cat', it.categoria), el('h2', 'catalog-name', it.nome), el('p', 'catalog-desc', it.resumo));
       art.append(figure, body);
       li.appendChild(art);
       return li;
@@ -488,6 +485,9 @@
 
     // Retorno do envio sem JavaScript (enviar.php redireciona com ?enviado=1 ou ?erro=1)
     const params = new URLSearchParams(location.search);
+    // Vindo da página ACM Argamassas: index.html?produto=ACM%20Argamassas#contato
+    const pedido = params.get('produto');
+    if (pedido && [...form.elements.produto.options].some((o) => o.value === pedido)) form.elements.produto.value = pedido;
     if (params.has('enviado')) setStatus('Mensagem enviada. Em breve entraremos em contato.', 'success');
     if (params.has('erro')) setStatus('Não foi possível enviar. Confira os campos e tente de novo.', 'error');
   }

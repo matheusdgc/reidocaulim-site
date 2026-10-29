@@ -91,7 +91,7 @@ p { text-wrap: pretty; }
   content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: 3px; border-radius: var(--r-xs);
   background: var(--color-yellow); transform: scaleX(0); transform-origin: left; transition: transform var(--t-ui) var(--ease);
 }
-.nav-list a:not(.btn):hover::after, .nav-list a[aria-current="true"]::after { transform: scaleX(1); }
+.nav-list a:not(.btn):hover::after, .nav-list a[aria-current="true"]::after, .nav-list a[aria-current="page"]::after { transform: scaleX(1); }
 .nav-toggle { display: none; }
 
 @media (max-width: 899px) {
@@ -279,10 +279,19 @@ p { text-wrap: pretty; }
 .acm-intro { max-width: 46rem; margin-bottom: var(--sp-7); font-size: var(--fs-h3); font-stretch: var(--wdth-sub); font-weight: 600; line-height: var(--lh-snug); color: var(--color-navy); text-wrap: balance; }
 .acm-intro strong { color: var(--color-green-deep); font-weight: 800; }
 /* Catálogo ACM Argamassas */
-.catalog { margin-top: var(--sp-9); }
-.catalog-head { display: grid; gap: var(--sp-2); margin-bottom: var(--sp-5); }
-.catalog-head h3 { font-size: var(--fs-h2); }
-.catalog-note { color: var(--color-muted); }
+.acm-more { margin-top: var(--sp-7); }
+/* Página ACM Argamassas */
+.page-hero { padding: var(--sp-8) 0 var(--sp-6); }
+.page-hero h1 { font-size: var(--fs-display); margin: var(--sp-3) 0 var(--sp-4); }
+.page-hero .lead { max-width: 44rem; }
+.page-hero .lead strong { color: var(--color-green-deep); font-weight: 700; }
+.breadcrumb { display: flex; flex-wrap: wrap; gap: var(--sp-2); font-size: var(--fs-small); color: var(--color-muted); }
+.breadcrumb a { color: var(--color-green-deep); text-decoration: underline; text-underline-offset: 3px; }
+.catalog { padding-top: var(--sp-7); }
+.catalog-cta { padding-block: var(--sp-8) var(--section-y); background: var(--color-surface); }
+.catalog-cta-inner { display: grid; justify-items: center; gap: var(--sp-4); text-align: center; }
+.catalog-cta p { font-size: var(--fs-lead); color: var(--color-muted); max-width: 40rem; }
+.catalog-cta .hero-actions { justify-content: center; margin-top: var(--sp-2); }
 .catalog-filters { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-6); }
 .filter {
   display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 44px; padding: var(--sp-2) var(--sp-4);
@@ -308,14 +317,12 @@ p { text-wrap: pretty; }
 .catalog-cat { font-size: var(--fs-tiny); font-weight: 600; color: var(--color-green-deep); }
 .catalog-name { font-size: 1.25rem; line-height: var(--lh-snug); }
 .catalog-desc { font-size: var(--fs-small); color: var(--color-muted); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
-.catalog-body .btn { margin-top: auto; align-self: flex-start; }
 @media (max-width: 560px) {
   .catalog-grid { gap: var(--sp-3); }
   .catalog-card { flex-direction: row; }
   .catalog-img { flex: 0 0 104px; aspect-ratio: auto; padding: var(--sp-2); }
   .catalog-body { padding: var(--sp-4); gap: var(--sp-1); }
   .catalog-desc { -webkit-line-clamp: 3; }
-  .catalog-body .btn { margin-top: var(--sp-2); }
 }
 @media (hover: hover) and (pointer: fine) {
   .catalog-card:hover { transform: translateY(-4px); box-shadow: var(--sh-3); border-color: var(--color-line-strong); }
