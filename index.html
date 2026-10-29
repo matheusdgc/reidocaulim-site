@@ -23,8 +23,8 @@
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/tokens.css?v=2">
-  <link rel="stylesheet" href="assets/css/main.css?v=2">
+  <link rel="stylesheet" href="assets/css/tokens.css?v=3">
+  <link rel="stylesheet" href="assets/css/main.css?v=3">
   <script>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json">
   {
@@ -60,7 +60,7 @@
         <ul class="nav-list" id="menu" data-nav-list>
           <li><a href="#sobre">A empresa</a></li>
           <li><a href="#caulim">CAULIM</a></li>
-          <li><a href="#acm-liga">ACM Liga</a></li>
+          <li><a href="#acm-argamassas">ACM Argamassas</a></li>
           <li><a href="#contato">Contato</a></li>
           <li class="nav-cta"><a class="btn btn-primary btn-sm" href="#contato">Solicitar cotação</a></li>
         </ul>
@@ -114,7 +114,11 @@
           </li>
           <li class="step" data-reveal>
             <span class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h13v10H3z"/><path d="M16 10h4l1 3v4h-5"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span>
-            <div><h3>Conclua sua compra</h3><p>Garantia e segurança no material e na entrega, auxílio na logística e acompanhamento pós-venda.</p></div>
+            <div><h3>Assessoria logística</h3><p>Seguindo as normas da ANTT, assessoria na contratação do transporte (FOB), sem nenhum custo adicional.</p></div>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+            <div><h3>Conclua sua compra</h3><p>Garantia e segurança no material e acompanhamento pós-venda.</p></div>
           </li>
         </ol>
       </div>
@@ -133,7 +137,6 @@
         <div class="product-block" id="caulim">
         <article class="product" aria-labelledby="caulim-titulo">
           <div class="product-visual">
-          <a class="maker-link" href="https://www.silicate.com.br/" target="_blank" rel="noopener">SILICATE.COM.BR</a>
           <div class="product-media" data-tilt data-mask>
             <span class="ripple" aria-hidden="true" data-ripple></span>
             <img class="tilt-target" src="assets/img/caulim-embalagens-1400.webp" srcset="assets/img/caulim-embalagens-700.webp 700w, assets/img/caulim-embalagens-1400.webp 1400w" sizes="(min-width: 960px) 55vw, 100vw" width="1400" height="803" loading="lazy" alt="Embalagens de caulim: big-bag e saca de 25 kg">
@@ -232,7 +235,8 @@
           <path class="arc-line" clip-path="url(#arc-clip-3)" d="M0 36 Q600 -28 1200 36"/>
         </svg>
 
-        <p class="acm-intro" data-reveal>Além do <strong>CAULIM</strong>, a SB Rei do Caulim Representações também representa o produto <strong>ACM LIGA</strong>.</p>
+        <div class="acm-block" id="acm-argamassas">
+        <p class="acm-intro" data-reveal>Além do <strong>CAULIM</strong>, a SB Rei do Caulim Representações também representa os produtos <strong>ACM Argamassas</strong>.</p>
 
         <!-- ACM Liga -->
         <article class="product product-alt" id="acm-liga" aria-labelledby="acm-titulo">
@@ -275,12 +279,221 @@
             </div>
           </div>
 
+          <div class="product-visual">
           <div class="acm-media" data-tilt>
             <figure class="acm-scene tilt-target" data-mask>
               <img src="assets/img/acm-liga-obra-860.webp" srcset="assets/img/acm-liga-obra-480.webp 480w, assets/img/acm-liga-obra-860.webp 860w" sizes="(min-width: 960px) 40vw, 90vw" width="859" height="879" loading="lazy" alt="Pacote de 1 kg do plastificante ACM Liga em um canteiro de obras">
             </figure>
           </div>
+          </div>
         </article>
+
+        <section class="catalog" aria-labelledby="catalogo-titulo">
+          <header class="catalog-head" data-reveal>
+            <h3 id="catalogo-titulo">Linha completa</h3>
+            <p class="catalog-note" data-catalog-status>Todos os produtos da linha, com a lista atualizada direto do catálogo do fabricante.</p>
+          </header>
+          <div class="catalog-list" data-reveal>
+            <!-- catalogo:inicio -->
+            <div class="catalog-filters" role="group" aria-label="Filtrar por categoria" data-catalog-filters>
+              <button class="filter" type="button" aria-pressed="true" data-filter="todos">Todos <span>17</span></button>
+              <button class="filter" type="button" aria-pressed="false" data-filter="aditivos-em-po">Aditivos em Pó <span>6</span></button>
+              <button class="filter" type="button" aria-pressed="false" data-filter="aditivos-liquidos">Aditivos Líquidos <span>8</span></button>
+              <button class="filter" type="button" aria-pressed="false" data-filter="bicomponente">Bicomponente <span>3</span></button>
+            </div>
+            <ul class="catalog-grid" data-catalog-grid>
+              <li class="catalog-item" data-categoria="aditivos-em-po">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2026/02/ACM-liga_500x500px-300x300.png" width="300" height="300" loading="lazy" alt="Embalagem do ACM LIGA"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos em Pó</span>
+                    <h4 class="catalog-name">ACM LIGA</h4>
+                    <p class="catalog-desc">Plastificante para argamassas desenvolvido para proporcionar máxima liga, maior plasticidade e melhor rendimento em argamassas de assentamento e revestimento.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM LIGA">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-liquidos">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2026/01/Endurquim_200kg_500x500px-300x300.png" width="300" height="300" loading="lazy" alt="Embalagem do ACM Endurquim"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos Líquidos</span>
+                    <h4 class="catalog-name">ACM Endurquim</h4>
+                    <p class="catalog-desc">Endurecedor químico catalisador de alta performance desenvolvido para aumentar a resistência, durabilidade e acabamento de superfícies de concreto e argamassas. Ideal para pisos novos ou antigos, o produto reage quimicamente com o substrato, promovendo uma superfície mais dura, densa, coesa e livre de pó.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM Endurquim">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-em-po">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/12/ACM-400-237x300.png" width="237" height="300" loading="lazy" alt="Embalagem do ACM 400"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos em Pó</span>
+                    <h4 class="catalog-name">ACM 400</h4>
+                    <p class="catalog-desc">Aditivo de alto desempenho desenvolvido para aumentar significativamente a aderência e a qualidade final das argamassas colantes. Ideal para argamassas dos tipos ACII e ACIII, ele garante excelente performance em aplicações exigentes, como cura submersa e cura em estufa, oferecendo maior segurança e resistência ao sistema colante.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 400">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-em-po">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/12/ACM-50-247x300.png" width="247" height="300" loading="lazy" alt="Embalagem do ACM 50"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos em Pó</span>
+                    <h4 class="catalog-name">ACM 50</h4>
+                    <p class="catalog-desc">Hidroxipropilmetilcelulose (HPMC) modificado de baixa viscosidade, desenvolvido especialmente para elevar o desempenho de argamassas colantes ACI, ACII e ACIII. Sua formulação proporciona excelente retenção de água, garantindo uma aplicação mais fácil, aderente e segura, mesmo em condições de trabalho mais secas ou quentes.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 50">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="bicomponente">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/12/1000-300x108.png" width="300" height="108" loading="lazy" alt="Embalagem do ACM 1000"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Bicomponente</span>
+                    <h4 class="catalog-name">ACM 1000</h4>
+                    <p class="catalog-desc">Argamassa semi-flexível, impermeável, indicada para vedação e eliminação da umidade. Pode ser aplicado sobre concreto, alvenarias, blocos cerâmicos e de concreto, fibrocimento e demais bases cimentícias. O ACM 1000 não é tinta de acabamento e permite que as paredes recebam pintura.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 1000">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="bicomponente">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/12/9001-300x108.png" width="300" height="108" loading="lazy" alt="Embalagem do ACM 9001"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Bicomponente</span>
+                    <h4 class="catalog-name">ACM 9001</h4>
+                    <p class="catalog-desc">Argamassa polimérica flexível, impermeável, indicada para vedação e eliminação da umidade. Pode ser aplicado sobre concreto, alvenarias, blocos cerâmicos e de concreto, fibrocimento e demais bases cimentícias. O ACM 9001 não é tinta de acabamento e permite que as paredes recebam pintura.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 9001">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="bicomponente">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/12/10001-300x108.png" width="300" height="108" loading="lazy" alt="Embalagem do ACM 10001"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Bicomponente</span>
+                    <h4 class="catalog-name">ACM 10001</h4>
+                    <p class="catalog-desc">Argamassa polimérica ultraflexível, impermeável, indicada para vedação e eliminação da umidade. Pode ser aplicado sobre concreto, alvenarias, blocos cerâmicos e de concreto, fibrocimento e demais bases cimentícias. O ACM 10001 não é tinta de acabamento e permite que as paredes recebam pintura.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 10001">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-em-po">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/12/ALVAXCA-P4000-estearato-de-calcio-NOVO-274x300.png" width="274" height="300" loading="lazy" alt="Embalagem do ALVAXCA P4000"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos em Pó</span>
+                    <h4 class="catalog-name">ALVAXCA P4000</h4>
+                    <p class="catalog-desc">Estearato de cálcio em pó extremamente fino, desenvolvido para oferecer alto desempenho como lubrificante, estabilizante e agente desmoldante em diversos segmentos industriais. Sua granulometria ultrafina garante excelente dispersão, maior uniformidade nos processos e resultados consistentes em diferentes formulações.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ALVAXCA P4000">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-em-po">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/12/ALVAXMAG-P300-Estearato-de-Magnesio-NOVO-274x300.png" width="274" height="300" loading="lazy" alt="Embalagem do ALVAXMAG P300"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos em Pó</span>
+                    <h4 class="catalog-name">ALVAXMAG P300</h4>
+                    <p class="catalog-desc">Estearato de magnésio desenvolvido para aplicações que exigem excelente desempenho como lubrificante, antiaglomerante e desmoldante. Muito utilizado em diversos segmentos industriais, ele melhora a fluidez dos pós, evita acúmulos indesejados nas máquinas e garante processos mais limpos, eficientes e consistentes.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ALVAXMAG P300">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-em-po">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/12/ALVAXZI-P4000-Estearato-de-Zinco-novo-289x300.png" width="289" height="300" loading="lazy" alt="Embalagem do ALVAXZI P4000"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos em Pó</span>
+                    <h4 class="catalog-name">ALVAXZI P4000</h4>
+                    <p class="catalog-desc">Estearato de zinco premium desenvolvido para atender indústrias que exigem eficiência, estabilidade e alto desempenho nos processos produtivos. Amplamente utilizado nos segmentos de plásticos, borrachas, masterbatch, compostos pigmentados e aplicações técnicas, ele atua como agente lubrificante, desmoldante e estabilizante, garantindo produtos finais mais uniformes, estáveis e com acabamento superior.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ALVAXZI P4000">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-liquidos">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/05/ACM-701-1L-300x300.png" width="300" height="300" loading="lazy" alt="Embalagem do ACM 701"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos Líquidos</span>
+                    <h4 class="catalog-name">ACM 701</h4>
+                    <p class="catalog-desc">Desmoldante e protetor para formas de peças em concreto e argamassas. Facilita e auxilia a desmoldagem de concretos e argamassas formando uma película protetora em formas metálicas e de madeira.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 701">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-liquidos">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/05/ACM-601-1L-300x300.png" width="300" height="300" loading="lazy" alt="Embalagem do ACM 601"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos Líquidos</span>
+                    <h4 class="catalog-name">ACM 601</h4>
+                    <p class="catalog-desc">Primer à base de polímero para ser aplicado para o preparo da base que receberá o piso autonivelante.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 601">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-liquidos">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/05/ACM-501-1L-300x300.png" width="300" height="300" loading="lazy" alt="Embalagem do ACM 501"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos Líquidos</span>
+                    <h4 class="catalog-name">ACM 501</h4>
+                    <p class="catalog-desc">Protege estruturas cimentícias enterradas ou não como, concreto, rebocos, alvenarias com argamassa em contato com áreas sujeitas à água e aos meios agressivos.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 501">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-liquidos">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/05/ACM-401-1L-300x300.png" width="300" height="300" loading="lazy" alt="Embalagem do ACM 401"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos Líquidos</span>
+                    <h4 class="catalog-name">ACM 401</h4>
+                    <p class="catalog-desc">Resina adesiva de alto desempenho para argamassas e chapiscos. É compatível com diversos tipos de substratos.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 401">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-liquidos">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/05/ACM-301-1L-300x300.png" width="300" height="300" loading="lazy" alt="Embalagem do ACM 301"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos Líquidos</span>
+                    <h4 class="catalog-name">ACM 301</h4>
+                    <p class="catalog-desc">Suspensão impermeabilizante para concretos e argamassa. Ele age por hidrofugação, ou seja, reduz os ângulos de molhagem dos poros de concretos e de argamassa permitindo a troca gasosa e evitando assim a formação de película de água, tornando o ambiente salubre.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 301">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-liquidos">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/05/ACM-201-1L-300x300.png" width="300" height="300" loading="lazy" alt="Embalagem do ACM 201"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos Líquidos</span>
+                    <h4 class="catalog-name">ACM 201</h4>
+                    <p class="catalog-desc">Base composta por resinas especiais que favorecem o aumento da aderência e plasticidade de argamassas utilizadas para reboco. Além de seu excelente desempenho, estas resinas são compatíveis com cimento.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 201">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+              <li class="catalog-item" data-categoria="aditivos-liquidos">
+                <article class="catalog-card">
+                  <div class="catalog-img"><img src="https://alvaxaditivos.com.br/wp-content/uploads/2025/05/ACM-101-1L-300x300.png" width="300" height="300" loading="lazy" alt="Embalagem do ACM 101"></div>
+                  <div class="catalog-body">
+                    <span class="catalog-cat">Aditivos Líquidos</span>
+                    <h4 class="catalog-name">ACM 101</h4>
+                    <p class="catalog-desc">Dar plasticidade (liga), proporcionar características de coesão e facilitar o trabalho, melhorar a retenção de água e a qualidade de incorporação de ar na argamassa. Utilizado na massa de assentamento e reboco.</p>
+                    <a class="btn btn-secondary btn-sm" href="#contato" data-quote-item="ACM 101">Solicitar cotação</a>
+                  </div>
+                </article>
+              </li>
+            </ul>
+            <!-- catalogo:fim -->
+          </div>
+        </section>
+        </div>
       </div>
     </section>
 
@@ -336,8 +549,8 @@
             <label for="f-produto">Produto de interesse</label>
             <select id="f-produto" name="produto" data-product-select>
               <option value="Caulim">Caulim</option>
-              <option value="ACM Liga">ACM Liga</option>
-              <option value="Os dois">Os dois</option>
+              <option value="ACM Argamassas">ACM Argamassas</option>
+              <option value="Caulim e ACM Argamassas">Caulim e ACM Argamassas</option>
               <option value="Outro assunto">Outro assunto</option>
             </select>
           </div>
@@ -377,7 +590,7 @@
         <ul>
           <li><a href="#sobre">A empresa</a></li>
           <li><a href="#caulim">Caulim</a></li>
-          <li><a href="#acm-liga">ACM Liga</a></li>
+          <li><a href="#acm-argamassas">ACM Argamassas</a></li>
           <li><a href="#contato">Contato</a></li>
           <li><a href="privacidade.html">Política de Privacidade</a></li>
         </ul>
@@ -406,7 +619,7 @@
     <symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-1 1.2-.4.2-.7.1a8.2 8.2 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.5 3.5 0 0 0-1.1 2.6 6 6 0 0 0 1.3 3.2 13.7 13.7 0 0 0 5.3 4.6c2 .8 2.7.9 3.7.8a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.3-.6-.4zM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4a9.8 9.8 0 1 1 8.3 4.6zm0-21.6A11.8 11.8 0 0 0 1.9 17.9L.2 24l6.3-1.6A11.8 11.8 0 1 0 12 .2z"/></symbol>
   </svg>
 
-  <script src="assets/js/config.js?v=2"></script>
-  <script src="assets/js/main.js?v=2" defer></script>
+  <script src="assets/js/config.js?v=3"></script>
+  <script src="assets/js/main.js?v=3" defer></script>
 </body>
 </html>

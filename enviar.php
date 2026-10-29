@@ -87,7 +87,7 @@ $produto = campo('produto', 40);
 $mensagem = campo('mensagem', 3000);
 $lgpd = campo('lgpd', 1);
 
-$produtosValidos = ['Caulim', 'ACM Liga', 'Os dois', 'Outro assunto'];
+$produtosValidos = ['Caulim', 'ACM Argamassas', 'Caulim e ACM Argamassas', 'Outro assunto'];
 if (!in_array($produto, $produtosValidos, true)) {
     $produto = 'Não informado';
 }

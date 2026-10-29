@@ -289,19 +289,113 @@
   function initQuoteLinks() {
     const select = $('[data-product-select]');
     const message = $('[data-message]');
-    $$('[data-quote]').forEach((a) => {
-      a.addEventListener('click', () => {
-        const product = a.dataset.quote;
-        if (select) select.value = product;
-        if (message && (message.value.trim() === '' || message.value === lastPrefill)) {
-          lastPrefill = product === 'Caulim'
-            ? `Gostaria de uma cotação de Caulim ${caulimChoice.cor}, ${caulimChoice.embalagem.toLowerCase()}. Volume aproximado: `
-            : `Gostaria de uma cotação de ${product}. Quantidade aproximada: `;
-          message.value = lastPrefill;
-        }
-        setTimeout(() => { const nome = $('#f-nome'); if (nome) nome.focus({ preventScroll: true }); }, reducedQuery.matches ? 0 : 700);
-      });
+    // Delegado: os cards do catálogo são recriados quando a lista atualizada chega
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('[data-quote], [data-quote-item]');
+      if (!a) return;
+      const product = a.dataset.quote || a.dataset.quoteItem;
+      if (select) select.value = product === 'Caulim' ? 'Caulim' : 'ACM Argamassas';
+      if (message && (message.value.trim() === '' || message.value === lastPrefill)) {
+        lastPrefill = product === 'Caulim'
+          ? `Gostaria de uma cotação de Caulim ${caulimChoice.cor}, ${caulimChoice.embalagem.toLowerCase()}. Volume aproximado: `
+          : `Gostaria de uma cotação de ${product}. Quantidade aproximada: `;
+        message.value = lastPrefill;
+      }
+      setTimeout(() => { const nome = $('#f-nome'); if (nome) nome.focus({ preventScroll: true }); }, reducedQuery.matches ? 0 : 700);
     });
+  }
+
+  /* ---------- Catálogo ACM Argamassas ----------
+     O HTML já traz uma cópia da lista (gerada por scripts/gerar_catalogo.py).
+     A cada visita o site busca a lista atual na API pública do fabricante e, se a
+     busca der certo, troca a cópia pela versão atual. Se falhar, a cópia fica. */
+  const CATALOGO_ORIGEM = 'https://alvaxaditivos.com.br';
+  const CATALOGO_API = `${CATALOGO_ORIGEM}/wp-json/wp/v2/product?per_page=100&_embed=wp:featuredmedia,wp:term`;
+
+  const plainText = (htmlText) => new DOMParser().parseFromString(htmlText || '', 'text/html').body.textContent.replace(/\s+/g, ' ').trim();
+  const slugify = (text) => text.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  function toCatalogItem(p) {
+    const emb = p._embedded || {};
+    const media = (emb['wp:featuredmedia'] || [])[0] || {};
+    const sizes = (media.media_details && media.media_details.sizes) || {};
+    const pic = sizes.medium || { source_url: media.source_url, width: 300, height: 300 };
+    const terms = (emb['wp:term'] || []).flat().filter((t) => t && t.taxonomy === 'product_cat');
+    let imagem = '';
+    try { if (pic.source_url && new URL(pic.source_url).origin === CATALOGO_ORIGEM) imagem = pic.source_url; } catch (_) { /* URL inválida */ }
+    return {
+      nome: plainText(p.title && p.title.rendered),
+      categoria: terms.length ? plainText(terms[0].name) : 'Outros',
+      resumo: plainText(p.excerpt && p.excerpt.rendered),
+      imagem,
+      imagemW: pic.width || 300,
+      imagemH: pic.height || 300
+    };
+  }
+
+  function renderCatalog(items, grid, filtersBox) {
+    const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+    const counts = new Map();
+    items.forEach((it) => counts.set(it.categoria, (counts.get(it.categoria) || 0) + 1));
+
+    const current = ($('.filter[aria-pressed="true"]', filtersBox) || {}).dataset;
+    const keep = current && (current.filter === 'todos' || [...counts.keys()].some((c) => slugify(c) === current.filter)) ? current.filter : 'todos';
+
+    const buttons = [['todos', 'Todos', items.length], ...[...counts].map(([c, n]) => [slugify(c), c, n])].map(([key, label, n]) => {
+      const b = el('button', 'filter', `${label} `);
+      b.type = 'button';
+      b.dataset.filter = key;
+      b.setAttribute('aria-pressed', String(key === keep));
+      b.appendChild(el('span', null, String(n)));
+      return b;
+    });
+    filtersBox.replaceChildren(...buttons);
+
+    grid.replaceChildren(...items.map((it) => {
+      const li = el('li', 'catalog-item');
+      li.dataset.categoria = slugify(it.categoria);
+      li.hidden = keep !== 'todos' && li.dataset.categoria !== keep;
+      const art = el('article', 'catalog-card');
+      const figure = el('div', 'catalog-img');
+      if (it.imagem) {
+        const img = el('img');
+        img.src = it.imagem; img.width = it.imagemW; img.height = it.imagemH; img.loading = 'lazy';
+        img.alt = `Embalagem do ${it.nome}`;
+        figure.appendChild(img);
+      }
+      const body = el('div', 'catalog-body');
+      const btn = el('a', 'btn btn-secondary btn-sm', 'Solicitar cotação');
+      btn.href = '#contato';
+      btn.dataset.quoteItem = it.nome;
+      body.append(el('span', 'catalog-cat', it.categoria), el('h4', 'catalog-name', it.nome), el('p', 'catalog-desc', it.resumo), btn);
+      art.append(figure, body);
+      li.appendChild(art);
+      return li;
+    }));
+  }
+
+  function initCatalog() {
+    const grid = $('[data-catalog-grid]');
+    const filtersBox = $('[data-catalog-filters]');
+    if (!grid || !filtersBox) return;
+
+    filtersBox.addEventListener('click', (e) => {
+      const b = e.target.closest('.filter');
+      if (!b) return;
+      $$('.filter', filtersBox).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      $$('.catalog-item', grid).forEach((li) => { li.hidden = b.dataset.filter !== 'todos' && li.dataset.categoria !== b.dataset.filter; });
+    });
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    fetch(CATALOGO_API, { signal: controller.signal, credentials: 'omit' })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+      .then((data) => {
+        const items = Array.isArray(data) ? data.map(toCatalogItem).filter((it) => it.nome) : [];
+        if (items.length) renderCatalog(items, grid, filtersBox);
+      })
+      .catch(() => { /* mantém a cópia que veio no HTML */ })
+      .finally(() => clearTimeout(timer));
   }
 
   /* ---------- Formulário de contato ---------- */
@@ -417,5 +511,6 @@
   initTilt();
   initVariants();
   initQuoteLinks();
+  initCatalog();
   initForm();
 })();
