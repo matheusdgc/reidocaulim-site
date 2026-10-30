@@ -37,13 +37,14 @@ def filtros(produtos):
 def card(p):
     e = html.escape
     return (
-        f'{INDENT}  <li class="catalog-item" data-categoria="{slug(p["categoria"])}">\n'
+        f'{INDENT}  <li class="catalog-item" data-categoria="{slug(p["categoria"])}" data-slug="{e(p["slug"])}">\n'
         f'{INDENT}    <article class="catalog-card">\n'
         f'{INDENT}      <div class="catalog-img"><img src="{e(p["imagem"])}" width="{p["imagemW"]}" height="{p["imagemH"]}" loading="lazy" alt="Embalagem do {e(p["nome"])}"></div>\n'
         f'{INDENT}      <div class="catalog-body">\n'
         f'{INDENT}        <span class="catalog-cat">{e(p["categoria"])}</span>\n'
         f'{INDENT}        <h3 class="catalog-name">{e(p["nome"])}</h3>\n'
         f'{INDENT}        <p class="catalog-desc">{e(p["resumo"])}</p>\n'
+        f'{INDENT}        <button class="catalog-open" type="button" aria-label="Ver detalhes do {e(p["nome"])}">Ver detalhes <span class="btn-arrow" aria-hidden="true">→</span></button>\n'
         f'{INDENT}      </div>\n'
         f'{INDENT}    </article>\n'
         f'{INDENT}  </li>'

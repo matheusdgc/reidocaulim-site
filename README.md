@@ -59,7 +59,7 @@ As animações respeitam a preferência do sistema por movimento reduzido: com e
 
 ## Cache e atualizações
 
-CSS e JavaScript são conferidos pelo navegador a cada acesso, e os links levam um número de versão (`?v=5`) em `index.html`, `privacidade.html` e `404.html`. Imagens e fontes ficam em cache por 30 dias (Vercel) ou 6 meses (Apache): ao trocar uma imagem, use um nome de arquivo novo.
+CSS e JavaScript são conferidos pelo navegador a cada acesso, e os links levam um número de versão (`?v=6`) em `index.html`, `privacidade.html` e `404.html`. Imagens e fontes ficam em cache por 30 dias (Vercel) ou 6 meses (Apache): ao trocar uma imagem, use um nome de arquivo novo.
 
 ## Catálogo ACM Argamassas
 
@@ -70,3 +70,5 @@ O `index.html` também traz uma cópia da lista, usada se a busca falhar e lida 
 ```bash
 python scripts/gerar_catalogo.py
 ```
+
+Ao clicar em um produto, abre uma janela com a descrição completa, os usos e os botões de cotação e WhatsApp, com o conteúdo vindo da mesma API (só como texto). Cada produto tem um link direto, como `#produto/acm-400`. Se a API estiver fora do ar, a janela mostra o resumo do card.

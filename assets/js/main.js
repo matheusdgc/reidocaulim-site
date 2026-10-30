@@ -321,16 +321,58 @@
     const sizes = (media.media_details && media.media_details.sizes) || {};
     const pic = sizes.medium || { source_url: media.source_url, width: 300, height: 300 };
     const terms = (emb['wp:term'] || []).flat().filter((t) => t && t.taxonomy === 'product_cat');
-    let imagem = '';
-    try { if (pic.source_url && new URL(pic.source_url).origin === CATALOGO_ORIGEM) imagem = pic.source_url; } catch (_) { /* URL inválida */ }
+    const safeImage = (url) => {
+      try { return url && new URL(url).origin === CATALOGO_ORIGEM ? url : ''; } catch (_) { return ''; }
+    };
+    const imagem = safeImage(pic.source_url);
     return {
+      slug: p.slug ? slugify(p.slug) : '',
       nome: plainText(p.title && p.title.rendered),
       categoria: terms.length ? plainText(terms[0].name) : 'Outros',
       resumo: plainText(p.excerpt && p.excerpt.rendered),
+      blocos: parseProductContent(p.content && p.content.rendered),
       imagem,
+      imagemGrande: safeImage(media.source_url) || imagem,
       imagemW: pic.width || 300,
       imagemH: pic.height || 300
     };
+  }
+
+  /* O conteúdo do fabricante é irregular (títulos dentro de listas, tópicos escritos com "•" e <br>).
+     Aqui ele vira uma lista simples de blocos de texto: nenhum HTML externo entra na página. */
+  function parseProductContent(html) {
+    const doc = new DOMParser().parseFromString(html || '', 'text/html');
+    const blocos = [];
+    const addLine = (raw, inList) => {
+      const text = raw.replace(/\s+/g, ' ').trim();
+      if (!text) return;
+      const bullet = /^[•·▪–-]\s*/.test(text);
+      const clean = text.replace(/^[•·▪–-]\s*/, '');
+      if (!clean) return;
+      const isItem = (bullet || inList) && !clean.endsWith(':') && clean.length <= 160;
+      blocos.push({ tipo: isItem ? 'item' : 'texto', texto: clean });
+    };
+    const walk = (node, inList) => {
+      let buffer = '';
+      const flush = () => { addLine(buffer, inList); buffer = ''; };
+      node.childNodes.forEach((n) => {
+        if (n.nodeType === Node.TEXT_NODE) { buffer += n.textContent; return; }
+        if (n.nodeType !== Node.ELEMENT_NODE) return;
+        const tag = n.tagName;
+        if (tag === 'BR') { flush(); return; }
+        if (/^H[1-6]$/.test(tag)) {
+          flush();
+          const title = n.textContent.replace(/\s+/g, ' ').trim();
+          if (title) blocos.push({ tipo: 'titulo', texto: title });
+          return;
+        }
+        if (['P', 'DIV', 'UL', 'OL', 'LI', 'SECTION'].includes(tag)) { flush(); walk(n, inList || tag === 'LI'); return; }
+        buffer += n.textContent;
+      });
+      flush();
+    };
+    walk(doc.body, false);
+    return blocos;
   }
 
   function renderCatalog(items, grid, filtersBox) {
@@ -354,6 +396,7 @@
     grid.replaceChildren(...items.map((it) => {
       const li = el('li', 'catalog-item');
       li.dataset.categoria = slugify(it.categoria);
+      li.dataset.slug = it.slug;
       li.hidden = keep !== 'todos' && li.dataset.categoria !== keep;
       const art = el('article', 'catalog-card');
       const figure = el('div', 'catalog-img');
@@ -364,7 +407,13 @@
         figure.appendChild(img);
       }
       const body = el('div', 'catalog-body');
-      body.append(el('span', 'catalog-cat', it.categoria), el('h3', 'catalog-name', it.nome), el('p', 'catalog-desc', it.resumo));
+      const open = el('button', 'catalog-open', 'Ver detalhes ');
+      open.type = 'button';
+      open.setAttribute('aria-label', `Ver detalhes do ${it.nome}`);
+      const arrow = el('span', 'btn-arrow', '→');
+      arrow.setAttribute('aria-hidden', 'true');
+      open.appendChild(arrow);
+      body.append(el('span', 'catalog-cat', it.categoria), el('h3', 'catalog-name', it.nome), el('p', 'catalog-desc', it.resumo), open);
       art.append(figure, body);
       li.appendChild(art);
       return li;
@@ -383,16 +432,146 @@
       $$('.catalog-item', grid).forEach((li) => { li.hidden = b.dataset.filter !== 'todos' && li.dataset.categoria !== b.dataset.filter; });
     });
 
+    const catalog = new Map();
+    const dialog = initProductDialog(grid, catalog);
+
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 8000);
     fetch(CATALOGO_API, { signal: controller.signal, credentials: 'omit' })
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
       .then((data) => {
         const items = Array.isArray(data) ? data.map(toCatalogItem).filter((it) => it.nome) : [];
-        if (items.length) renderCatalog(items, grid, filtersBox);
+        if (!items.length) return;
+        items.forEach((it) => catalog.set(it.slug, it));
+        renderCatalog(items, grid, filtersBox);
       })
       .catch(() => { /* mantém a cópia que veio no HTML */ })
-      .finally(() => clearTimeout(timer));
+      .finally(() => {
+        clearTimeout(timer);
+        if (dialog) dialog.openFromHash();
+      });
+  }
+
+  /* ---------- Janela de detalhes do produto ---------- */
+  function initProductDialog(grid, catalog) {
+    const dialog = $('[data-product-dialog]');
+    if (!dialog || typeof dialog.showModal !== 'function') return null;
+    const image = $('[data-pd-img]', dialog);
+    const category = $('[data-pd-cat]', dialog);
+    const title = $('[data-pd-name]', dialog);
+    const content = $('[data-pd-content]', dialog);
+    const scroller = $('[data-pd-scroll]', dialog);
+    const quote = $('[data-pd-quote]', dialog);
+    const whats = $('[data-pd-wa]', dialog);
+    const HASH = /^#produto\/([a-z0-9-]+)$/;
+    let pushed = false;
+
+    // Sem a API, a janela usa o que está no próprio card
+    const fromCard = (slug) => {
+      const li = $$('.catalog-item', grid).find((x) => x.dataset.slug === slug);
+      if (!li) return null;
+      const img = $('img', li);
+      return {
+        slug,
+        nome: $('.catalog-name', li).textContent,
+        categoria: $('.catalog-cat', li).textContent,
+        resumo: $('.catalog-desc', li).textContent,
+        blocos: [],
+        imagemGrande: img ? img.src : ''
+      };
+    };
+
+    const fill = (item) => {
+      if (item.imagemGrande) { image.src = item.imagemGrande; image.alt = `Embalagem do ${item.nome}`; image.hidden = false; } else { image.removeAttribute('src'); image.alt = ''; image.hidden = true; }
+      category.textContent = item.categoria;
+      title.textContent = item.nome;
+      const nodes = [];
+      let list = null;
+      const blocos = item.blocos && item.blocos.length ? item.blocos : [{ tipo: 'texto', texto: item.resumo }];
+      blocos.forEach((b) => {
+        if (b.tipo === 'item') {
+          if (!list) { list = document.createElement('ul'); list.className = 'checks'; nodes.push(list); }
+          const li = document.createElement('li');
+          li.textContent = b.texto;
+          list.appendChild(li);
+          return;
+        }
+        list = null;
+        const n = document.createElement(b.tipo === 'titulo' ? 'h3' : 'p');
+        n.textContent = b.texto;
+        nodes.push(n);
+      });
+      content.replaceChildren(...nodes);
+      scroller.scrollTop = 0;
+      quote.dataset.quoteItem = item.nome;
+      whats.dataset.waProduct = item.nome;
+      updateWhatsLinks();
+    };
+
+    const open = (slug, push) => {
+      const item = catalog.get(slug) || fromCard(slug);
+      if (!item) return;
+      fill(item);
+      dialog.classList.remove('is-closing');
+      if (!dialog.open) dialog.showModal();
+      if (push) { history.pushState({ produto: slug }, '', `#produto/${slug}`); pushed = true; }
+    };
+
+    const hide = (immediate) => {
+      if (!dialog.open) return;
+      if (immediate || reducedQuery.matches) { dialog.classList.remove('is-closing'); dialog.close(); return; }
+      dialog.classList.add('is-closing');
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        dialog.classList.remove('is-closing');
+        dialog.close();
+      };
+      dialog.addEventListener('animationend', finish, { once: true });
+      setTimeout(finish, (parseFloat(cssVar('--t-micro')) || 160) + 80);
+    };
+
+    const cleanUrl = () => `${location.pathname}${location.search}`;
+    // Quem abriu pelo card volta uma entrada no histórico; quem chegou por link direto só limpa o endereço
+    const requestClose = () => {
+      if (pushed) { pushed = false; history.back(); return; }
+      if (HASH.test(location.hash)) history.replaceState(null, '', cleanUrl());
+      hide();
+    };
+
+    grid.addEventListener('click', (e) => {
+      if (!e.target.closest('.catalog-open')) return;
+      const li = e.target.closest('.catalog-item');
+      if (li && li.dataset.slug) open(li.dataset.slug, true);
+    });
+    $('[data-dialog-close]', dialog).addEventListener('click', requestClose);
+    dialog.addEventListener('cancel', (e) => { e.preventDefault(); requestClose(); });
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) requestClose(); });
+
+    quote.addEventListener('click', (e) => {
+      // O preenchimento do formulário é feito por initQuoteLinks, que escuta o mesmo clique no document
+      e.preventDefault();
+      pushed = false;
+      history.replaceState(null, '', `${cleanUrl()}#contato`);
+      hide(true);
+      const target = document.getElementById('contato');
+      if (target) target.scrollIntoView();
+    });
+
+    addEventListener('popstate', () => {
+      const match = location.hash.match(HASH);
+      if (match) { open(match[1], false); return; }
+      pushed = false;
+      hide();
+    });
+
+    return {
+      openFromHash() {
+        const match = location.hash.match(HASH);
+        if (match) open(match[1], false);
+      }
+    };
   }
 
   /* ---------- Formulário de contato ---------- */

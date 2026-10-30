@@ -73,6 +73,10 @@
   --container: 1200px;
   --gutter: clamp(1rem, .5rem + 2.5vw, 2rem);
   --header-h: 92px;
+  --pd-width: 980px;
+  --pd-height: 680px;
+  --pd-media-mobile: 200px;
+  --pd-backdrop: rgba(15, 27, 45, .6);
 
   /* Raios */
   --border-hero: 5px;
