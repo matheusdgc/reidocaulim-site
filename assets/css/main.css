@@ -381,6 +381,45 @@ html:has(.product-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
 }
 
 
+/* ---------- Clientes e parceiros ---------- */
+.partners-band { padding-bottom: var(--section-y); }
+.partners-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--sp-3); margin-bottom: var(--sp-5); }
+.partners-head h2 { font-size: var(--fs-h3); }
+.marquee { display: flex; overflow: hidden; }
+/* Sem animação (movimento reduzido), a faixa vira uma grade centralizada; a cópia some */
+.marquee-track { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--sp-5); padding-inline: var(--gutter); }
+.marquee-track[aria-hidden="true"] { display: none; }
+.partner {
+  display: grid; place-items: center; height: var(--logo-box-band); padding: var(--sp-2) var(--sp-3); border-radius: var(--r-md);
+  transition: transform var(--t-ui) var(--ease), box-shadow var(--t-ui) var(--ease), border-color var(--t-ui) var(--ease);
+}
+.partner img {
+  height: var(--logo-h-band); width: auto; max-width: var(--logo-w-band); object-fit: contain;
+  filter: grayscale(1); opacity: var(--logo-gray-opacity);
+  transition: filter var(--t-ui) var(--ease), opacity var(--t-ui) var(--ease), transform var(--t-ui) var(--ease);
+}
+.partner:hover img, .partner:focus-visible img, .partner:active img { filter: none; opacity: 1; }
+
+/* Página de parceiros */
+.page-hero { padding: var(--sp-8) 0 var(--sp-4); }
+.page-hero h1 { font-size: var(--fs-display); margin: var(--sp-3) 0 var(--sp-4); }
+.page-hero .lead { max-width: 44rem; }
+.breadcrumb { display: flex; flex-wrap: wrap; gap: var(--sp-2); font-size: var(--fs-small); color: var(--color-muted); }
+.breadcrumb a { color: var(--color-green-deep); text-decoration: underline; text-underline-offset: 3px; }
+.partners-page { padding-top: var(--sp-6); }
+.partners-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--sp-4); }
+.partners-grid .partner { height: var(--logo-box-grid); padding: var(--sp-5); border: 1px solid var(--color-line); background: var(--color-bg); }
+.partners-grid .partner img { height: var(--logo-h-grid); max-width: 85%; }
+@media (hover: hover) and (pointer: fine) {
+  .partners-grid .partner:hover { transform: translateY(-4px); box-shadow: var(--sh-3); border-color: var(--color-line-strong); }
+  .partner:hover img { transform: scale(1.04); }
+}
+@media (max-width: 560px) {
+  .partners-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); }
+  .partners-grid .partner { height: var(--logo-box-grid-mobile); padding: var(--sp-3); }
+  .partners-head { justify-content: center; text-align: center; }
+}
+
 /* ---------- Contato ---------- */
 .contact { background: var(--color-surface); }
 .contact-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: var(--sp-8); align-items: start; }
@@ -538,6 +577,12 @@ html:has(.product-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
   .product-dialog.is-closing { animation: pd-fade-out var(--t-micro) var(--ease-exit) both; }
   .product-dialog.is-closing::backdrop { animation: pd-fade-out var(--t-micro) var(--ease-exit) both; }
 
+  /* Faixa de parceiros: loop lento e contínuo, pausa ao passar o mouse ou focar uma logo */
+  .marquee { mask-image: linear-gradient(90deg, transparent, #000 var(--marquee-fade), #000 calc(100% - var(--marquee-fade)), transparent); }
+  .marquee-track { flex-wrap: nowrap; flex-shrink: 0; justify-content: flex-start; padding-inline: 0 var(--sp-5); animation: marquee var(--t-marquee) linear infinite; }
+  .marquee-track[aria-hidden="true"] { display: flex; }
+  .marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+
   /* WhatsApp entra uma vez */
   .wa-float { animation: wa-in var(--t-reveal) var(--ease) var(--d-wa) both; }
 }
@@ -548,6 +593,7 @@ html:has(.product-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
 @keyframes pd-in { from { opacity: 0; transform: translateY(var(--rise)); } to { opacity: 1; transform: none; } }
 @keyframes pd-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes pd-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes marquee { to { transform: translateX(-100%); } }
 @keyframes wa-in { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
