@@ -7,6 +7,7 @@ Uso: python scripts/gerar_parceiros.py
 Reescreve os trechos entre <!-- parceiros:faixa:inicio --> / <!-- parceiros:faixa:fim --> no index.html
 e <!-- parceiros:grade:inicio --> / <!-- parceiros:grade:fim --> no parceiros.html.
 """
+import hashlib
 import html
 import json
 import re
@@ -27,13 +28,18 @@ def medidas(logo):
         return im.size
 
 
+def versao(logo):
+    """Assinatura do conteúdo: a logo muda de endereço quando muda, então o cache longo não segura a antiga."""
+    return hashlib.sha1((RAIZ / logo).read_bytes()).hexdigest()[:8]
+
+
 def link(p, indent, oculto=False):
     e = html.escape
     w, h = medidas(p["logo"])
     extra = ' tabindex="-1"' if oculto else ""
     return (f'{indent}<li><a class="partner" href="{e(p["site"])}" target="_blank" rel="noopener"{extra} '
             f'aria-label="Visitar o site da {e(p["nome"])} (abre em nova aba)">'
-            f'<img src="{e(p["logo"])}" width="{w}" height="{h}" loading="lazy" alt="{e(p["nome"])}"></a></li>')
+            f'<img src="{e(p["logo"])}?v={versao(p["logo"])}" width="{w}" height="{h}" loading="lazy" draggable="false" alt="{e(p["nome"])}"></a></li>')
 
 
 def substituir(pagina, marcador, bloco):
@@ -50,8 +56,12 @@ def main():
     parceiros = json.loads(DADOS.read_text(encoding="utf-8"))
     ind = "        "
     # A faixa repete a lista uma vez, escondida dos leitores de tela, para o loop não ter emenda.
-    faixa = (f'{ind}<ul class="marquee-track">\n' + "\n".join(link(p, ind + "  ") for p in parceiros) + f'\n{ind}</ul>\n'
-             f'{ind}<ul class="marquee-track" aria-hidden="true">\n' + "\n".join(link(p, ind + "  ", True) for p in parceiros) + f'\n{ind}</ul>')
+    # O movimento e o arrasto ficam em assets/js/main.js (initMarquee), sobre .marquee-inner.
+    i2 = ind + "  "
+    faixa = (f'{ind}<div class="marquee-inner" data-marquee-inner>\n'
+             f'{i2}<ul class="marquee-track">\n' + "\n".join(link(p, i2 + "  ") for p in parceiros) + f'\n{i2}</ul>\n'
+             f'{i2}<ul class="marquee-track" aria-hidden="true">\n' + "\n".join(link(p, i2 + "  ", True) for p in parceiros) + f'\n{i2}</ul>\n'
+             f'{ind}</div>')
     substituir("index.html", "faixa", faixa)
     grade = f'{ind}<ul class="partners-grid">\n' + "\n".join(link(p, ind + "  ") for p in parceiros) + f'\n{ind}</ul>'
     substituir("parceiros.html", "grade", grade)

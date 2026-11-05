@@ -389,6 +389,15 @@ html:has(.product-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
 /* Sem animação (movimento reduzido), a faixa vira uma grade centralizada; a cópia some */
 .marquee-track { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--sp-5); padding-inline: var(--gutter); }
 .marquee-track[aria-hidden="true"] { display: none; }
+.marquee-inner { display: flex; justify-content: center; width: 100%; }
+/* Com JavaScript e sem movimento reduzido, a faixa roda e pode ser arrastada (initMarquee em main.js) */
+.marquee.is-running { cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  mask-image: linear-gradient(90deg, transparent, #000 var(--marquee-fade), #000 calc(100% - var(--marquee-fade)), transparent); }
+.marquee.is-running.is-dragging { cursor: grabbing; }
+.marquee.is-running .marquee-inner { justify-content: flex-start; width: max-content; will-change: transform; }
+.marquee.is-running .marquee-track { flex-wrap: nowrap; flex-shrink: 0; justify-content: flex-start; padding-inline: 0 var(--sp-5); }
+.marquee.is-running .marquee-track[aria-hidden="true"] { display: flex; }
+.marquee.is-running img { -webkit-user-drag: none; }
 .partner {
   display: grid; place-items: center; height: var(--logo-box-band); padding: var(--sp-2) var(--sp-3); border-radius: var(--r-md);
   transition: transform var(--t-ui) var(--ease), box-shadow var(--t-ui) var(--ease), border-color var(--t-ui) var(--ease);
@@ -577,12 +586,6 @@ html:has(.product-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
   .product-dialog.is-closing { animation: pd-fade-out var(--t-micro) var(--ease-exit) both; }
   .product-dialog.is-closing::backdrop { animation: pd-fade-out var(--t-micro) var(--ease-exit) both; }
 
-  /* Faixa de parceiros: loop lento e contínuo, pausa ao passar o mouse ou focar uma logo */
-  .marquee { mask-image: linear-gradient(90deg, transparent, #000 var(--marquee-fade), #000 calc(100% - var(--marquee-fade)), transparent); }
-  .marquee-track { flex-wrap: nowrap; flex-shrink: 0; justify-content: flex-start; padding-inline: 0 var(--sp-5); animation: marquee var(--t-marquee) linear infinite; }
-  .marquee-track[aria-hidden="true"] { display: flex; }
-  .marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
-
   /* WhatsApp entra uma vez */
   .wa-float { animation: wa-in var(--t-reveal) var(--ease) var(--d-wa) both; }
 }
@@ -593,7 +596,6 @@ html:has(.product-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
 @keyframes pd-in { from { opacity: 0; transform: translateY(var(--rise)); } to { opacity: 1; transform: none; } }
 @keyframes pd-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes pd-fade-out { from { opacity: 1; } to { opacity: 0; } }
-@keyframes marquee { to { transform: translateX(-100%); } }
 @keyframes wa-in { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {

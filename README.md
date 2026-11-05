@@ -59,7 +59,7 @@ As animações respeitam a preferência do sistema por movimento reduzido: com e
 
 ## Cache e atualizações
 
-CSS e JavaScript são conferidos pelo navegador a cada acesso, e os links levam um número de versão (`?v=7`) em `index.html`, `parceiros.html`, `privacidade.html` e `404.html`. Imagens e fontes ficam em cache por 30 dias (Vercel) ou 6 meses (Apache): ao trocar uma imagem, use um nome de arquivo novo.
+CSS e JavaScript são conferidos pelo navegador a cada acesso, e os links levam um número de versão (`?v=8`) em `index.html`, `parceiros.html`, `privacidade.html` e `404.html`. Imagens e fontes ficam em cache por 30 dias (Vercel) ou 6 meses (Apache): ao trocar uma imagem, use um nome de arquivo novo.
 
 ## Catálogo ACM Argamassas
 
@@ -75,7 +75,7 @@ Ao clicar em um produto, abre uma janela com a descrição completa, os usos e o
 
 ## Clientes e parceiros
 
-A faixa de logos da página inicial e a grade de `parceiros.html` saem de `assets/data/parceiros.json` (nome, site e logo). Para incluir um parceiro:
+A faixa de logos da página inicial e a grade de `parceiros.html` saem de `assets/data/parceiros.json` (nome, site e logo). A faixa roda sozinha e pode ser arrastada com o mouse ou o dedo (`initMarquee` em `assets/js/main.js`); um arrasto não abre o site, só um clique simples. Para incluir um parceiro:
 
 1. Coloque a logo original em `assets/img/logos-clientes/` e registre o arquivo em `scripts/preparar_logos.py`.
 2. Rode `python scripts/preparar_logos.py` (padroniza em `assets/img/parceiros/`).

@@ -1,7 +1,7 @@
 """Padroniza as logos de clientes e parceiros para o site.
 
 Lê os originais em assets/img/logos-clientes/ (e originais-web/), e grava em assets/img/parceiros/:
-fundo branco, bordas vazias cortadas, margem igual em volta e altura máxima de 160 px, em WebP.
+fundo branco, bordas vazias cortadas, margem igual em volta e altura máxima de 240 px (nítidas em telas de alta densidade), em WebP.
 SVGs são copiados como estão (apenas com as cores fixadas, ver TROUW abaixo).
 
 Uso: python scripts/preparar_logos.py
@@ -14,7 +14,7 @@ from PIL import Image, ImageChops
 RAIZ = Path(__file__).resolve().parent.parent
 ORIGEM = RAIZ / "assets" / "img" / "logos-clientes"
 DESTINO = RAIZ / "assets" / "img" / "parceiros"
-ALTURA = 160
+ALTURA = 240
 MARGEM = 0.08  # fração da maior dimensão
 
 # arquivo de origem -> nome final (sem extensão)

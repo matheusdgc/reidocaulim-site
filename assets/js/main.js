@@ -574,6 +574,132 @@
     };
   }
 
+  /* ---------- Faixa de clientes e parceiros ----------
+     Roda sozinha e pode ser arrastada com o mouse ou o dedo, com um pouco de inércia ao soltar.
+     Pausa com o mouse em cima ou com uma logo em foco. Com movimento reduzido fica a grade parada do CSS. */
+  function initMarquee() {
+    const box = $('.marquee');
+    const inner = box && $('[data-marquee-inner]', box);
+    const first = inner && $('.marquee-track', inner);
+    if (!first || reducedQuery.matches) return;
+    box.classList.add('is-running');
+
+    const DRAG_THRESHOLD = 6;      // px até o gesto contar como arrasto, e não como clique
+    const RESUME_AFTER = 1500;     // ms parado depois de soltar, antes de voltar a rodar
+    const FRICTION = 0.03;         // fração da velocidade que sobra após 1 s de inércia
+    let width = 0;
+    let offset = 0;
+    let velocity = 0;
+    let last = 0;
+    let raf = 0;
+    let visible = false;
+    let hover = false;
+    let focus = false;
+    let resumeAt = 0;
+    let drag = null;
+    let suppressUntil = 0;         // depois de um arrasto, o clique que vier em seguida não abre o site
+
+    const speed = () => width / (parseFloat(cssVar('--t-marquee')) || 40); // px por segundo
+    const wrap = (x) => {
+      if (!width) return x;
+      const r = x % width;
+      return r > 0 ? r - width : r;
+    };
+    const paint = () => { inner.style.transform = `translate3d(${offset}px, 0, 0)`; };
+    const measure = () => {
+      width = first.getBoundingClientRect().width;
+      // Cópias suficientes para cobrir a faixa inteira mesmo em telas largas (todas ocultas de leitores de tela)
+      const template = inner.lastElementChild;
+      while (width && inner.children.length * width < box.clientWidth + width) {
+        inner.appendChild(template.cloneNode(true));
+      }
+      offset = wrap(offset);
+      paint();
+    };
+
+    const tick = (t) => {
+      const dt = last ? Math.min(0.05, (t - last) / 1000) : 0;
+      last = t;
+      if (!drag) {
+        if (Math.abs(velocity) > 10) {
+          offset += velocity * dt;
+          velocity *= Math.pow(FRICTION, dt);
+        } else {
+          velocity = 0;
+          if (!hover && !focus && performance.now() >= resumeAt) offset -= speed() * dt;
+        }
+        offset = wrap(offset);
+        paint();
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    const play = () => { if (!raf && visible && !document.hidden) { last = 0; raf = requestAnimationFrame(tick); } };
+    const pause = () => { cancelAnimationFrame(raf); raf = 0; };
+
+    box.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') hover = true; });
+    box.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hover = false; });
+
+    box.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      drag = { id: e.pointerId, startX: e.clientX, startOffset: offset, lastX: e.clientX, lastT: performance.now(), moved: 0, captured: false };
+      velocity = 0;
+      suppressUntil = 0;
+    });
+    box.addEventListener('pointermove', (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.startX;
+      drag.moved = Math.max(drag.moved, Math.abs(dx));
+      if (drag.moved < DRAG_THRESHOLD) return;
+      if (!drag.captured) {
+        // A captura só começa depois do limite: antes disso, um toque simples ainda abre o site
+        box.setPointerCapture(e.pointerId);
+        drag.captured = true;
+        box.classList.add('is-dragging');
+      }
+      const now = performance.now();
+      const dt = now - drag.lastT;
+      if (dt > 0) velocity = ((e.clientX - drag.lastX) / dt) * 1000;
+      drag.lastX = e.clientX;
+      drag.lastT = now;
+      offset = wrap(drag.startOffset + dx);
+      paint();
+    });
+    const endDrag = (e) => {
+      if (!drag || (e && e.pointerId !== drag.id)) return;
+      if (drag.moved >= DRAG_THRESHOLD) suppressUntil = performance.now() + 300;
+      if (performance.now() - drag.lastT > 80) velocity = 0; // parou antes de soltar: sem inércia
+      drag = null;
+      box.classList.remove('is-dragging');
+      resumeAt = performance.now() + RESUME_AFTER;
+    };
+    box.addEventListener('pointerup', endDrag);
+    box.addEventListener('pointercancel', endDrag);
+    box.addEventListener('click', (e) => {
+      if (performance.now() > suppressUntil) return;
+      suppressUntil = 0;
+      e.preventDefault();
+      e.stopPropagation();
+    }, true);
+
+    // Ao chegar numa logo pelo teclado, a faixa para e traz a logo para a área visível
+    box.addEventListener('focusin', (e) => {
+      focus = true;
+      velocity = 0;
+      const b = box.getBoundingClientRect();
+      const r = e.target.getBoundingClientRect();
+      if (r.left < b.left + b.width * 0.1 || r.right > b.right - b.width * 0.1) {
+        offset = wrap(offset + (b.left + b.width / 2) - (r.left + r.width / 2));
+        paint();
+      }
+    });
+    box.addEventListener('focusout', () => { focus = false; });
+
+    if ('ResizeObserver' in window) new ResizeObserver(measure).observe(first);
+    measure();
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; visible ? play() : pause(); }).observe(box);
+    document.addEventListener('visibilitychange', () => (document.hidden ? pause() : play()));
+  }
+
   /* ---------- Formulário de contato ---------- */
   function initForm() {
     const form = $('[data-form]');
@@ -686,6 +812,7 @@
   initHeader();
   initHero();
   initReveals();
+  initMarquee();
   initDust();
   initTilt();
   initVariants();
