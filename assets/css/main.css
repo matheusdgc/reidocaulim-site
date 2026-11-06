@@ -514,8 +514,9 @@ html:has(.product-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: var(--sp-7); padding-bottom: var(--sp-7); }
 .footer-logo { display: inline-block; padding: var(--sp-2); background: var(--color-bg); border-radius: var(--r-md); margin-bottom: var(--sp-4); }
 .footer-logo img { width: 140px; height: auto; }
-.footer-tagline { display: inline-flex; align-items: center; gap: var(--sp-2); }
-.mini-flag { width: 22px; height: auto; flex: none; border-radius: 2px; }
+/* Frase numa linha própria, embaixo da logo, com a bandeirinha alinhada ao meio do texto */
+.footer-tagline { display: flex; align-items: center; gap: var(--sp-3); margin: 0; }
+.mini-flag { width: 30px; height: auto; flex: none; border-radius: 3px; box-shadow: 0 0 0 1px var(--color-on-dark-line); }
 .footer-title { font-size: var(--fs-small); font-stretch: var(--wdth-sub); color: var(--color-on-dark); margin-bottom: var(--sp-4); letter-spacing: 0; }
 .site-footer ul { display: grid; gap: var(--sp-2); }
 .site-footer a { color: var(--color-on-dark-muted); text-decoration: none; overflow-wrap: anywhere; transition: color var(--t-micro) var(--ease); }
@@ -525,6 +526,7 @@ html:has(.product-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
 @media (max-width: 1024px) {
   .footer-grid { grid-template-columns: 1fr; gap: var(--sp-6); justify-items: center; text-align: center; }
   .site-footer ul { justify-items: center; }
+  .footer-tagline { justify-content: center; }
   /* Centralizado, o texto legal ganha espaço embaixo para o botão do WhatsApp não cobri-lo */
   .footer-legal { flex-direction: column; align-items: center; text-align: center; padding-inline: var(--gutter); padding-bottom: calc(60px + var(--sp-7) + env(safe-area-inset-bottom)); }
 }
