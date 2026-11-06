@@ -38,7 +38,7 @@ def link(p, indent, oculto=False):
     w, h = medidas(p["logo"])
     extra = ' tabindex="-1"' if oculto else ""
     return (f'{indent}<li><a class="partner" href="{e(p["site"])}" target="_blank" rel="noopener"{extra} '
-            f'aria-label="Visitar o site da {e(p["nome"])} (abre em nova aba)">'
+            f'draggable="false" aria-label="Visitar o site da {e(p["nome"])} (abre em nova aba)">'
             f'<img src="{e(p["logo"])}?v={versao(p["logo"])}" width="{w}" height="{h}" loading="lazy" draggable="false" alt="{e(p["nome"])}"></a></li>')
 
 

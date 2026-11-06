@@ -23,6 +23,7 @@ RASTER = {
     "nutron-logo.jpeg": "cargill-nutron",
     "polinutri-logo.png": "polinutri",
     "silicate-logo.jpeg": "silicate",
+    "univitta-logo.jpg": "univitta",
     "originais-web/facholi-logo.png": "potensal-facholi",
     "originais-web/rumenforte-logo.png": "rumen-forte",
     "originais-web/neonutra-preta.webp": "neonutra",
@@ -49,6 +50,15 @@ def para_rgb_branco(im):
     return im.convert("RGB")
 
 
+# Originais com fundo cinza-claro em vez de branco: o fundo vira branco antes do corte,
+# para não aparecer um retângulo acinzentado dentro do card
+CLAREAR_FUNDO = {"univitta-logo.jpg"}
+
+
+def clarear_fundo(im, limite=238):
+    return im.point(lambda p: 255 if p >= limite else p)
+
+
 def cortar_bordas(im, tolerancia=12):
     fundo = Image.new("RGB", im.size, (255, 255, 255))
     diff = ImageChops.difference(im, fundo).convert("L").point(lambda p: 255 if p > tolerancia else 0)
@@ -59,7 +69,10 @@ def cortar_bordas(im, tolerancia=12):
 def main():
     DESTINO.mkdir(parents=True, exist_ok=True)
     for origem, nome in RASTER.items():
-        im = cortar_bordas(para_rgb_branco(Image.open(ORIGEM / origem)))
+        im = para_rgb_branco(Image.open(ORIGEM / origem))
+        if origem in CLAREAR_FUNDO:
+            im = clarear_fundo(im)
+        im = cortar_bordas(im)
         m = round(max(im.size) * MARGEM)
         tela = Image.new("RGB", (im.width + 2 * m, im.height + 2 * m), (255, 255, 255))
         tela.paste(im, (m, m))

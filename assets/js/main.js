@@ -130,7 +130,7 @@
 
   /* ---------- Revelações ao rolar ---------- */
   function initReveals() {
-    const targets = $$('[data-reveal], [data-mask], [data-arc]');
+    const targets = $$('[data-reveal], [data-mask], [data-arc], [data-seal]');
     if (!('IntersectionObserver' in window)) { targets.forEach((el) => el.classList.add('is-in')); return; }
     const stagger = parseFloat(cssVar('--stagger')) || 70;
     // Um elemento todo recortado por clip-path conta como invisível para o observer,
@@ -153,6 +153,31 @@
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
     watched.forEach((_, key) => io.observe(key));
+  }
+
+  /* ---------- Contador do selo de 20 anos ---------- */
+  function initCounters() {
+    const nums = $$('[data-count]');
+    if (!nums.length || reducedQuery.matches || !('IntersectionObserver' in window)) return;
+    const duration = parseFloat(cssVar('--t-count')) || 1400;
+    const delay = parseFloat(cssVar('--d-count')) || 200;
+    const easeOut = (x) => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * x)); // expo, a mesma curva das revelações
+    nums.forEach((el) => { el.textContent = '0'; });
+    const io = new IntersectionObserver((entries) => {
+      entries.filter((e) => e.isIntersecting).forEach(({ target: el }) => {
+        io.unobserve(el);
+        const end = parseInt(el.dataset.count, 10) || 0;
+        let start = 0;
+        const step = (t) => {
+          if (!start) start = t + delay;
+          const x = Math.max(0, (t - start) / duration);
+          el.textContent = String(Math.round(end * easeOut(x)));
+          if (x < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    nums.forEach((el) => io.observe(el));
   }
 
   /* ---------- Pó mineral na abertura ---------- */
@@ -639,6 +664,11 @@
     box.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') hover = true; });
     box.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hover = false; });
 
+    // Links e imagens são arrastáveis por padrão: sem isso o navegador mostra a "imagem fantasma"
+    // do link e cancela o gesto (pointercancel) no meio do arrasto
+    box.addEventListener('dragstart', (e) => e.preventDefault());
+    box.addEventListener('contextmenu', (e) => { if (drag && drag.moved >= DRAG_THRESHOLD) e.preventDefault(); });
+
     box.addEventListener('pointerdown', (e) => {
       if (e.button !== 0) return;
       drag = { id: e.pointerId, startX: e.clientX, startOffset: offset, lastX: e.clientX, lastT: performance.now(), moved: 0, captured: false };
@@ -813,6 +843,7 @@
   initHero();
   initReveals();
   initMarquee();
+  initCounters();
   initDust();
   initTilt();
   initVariants();
