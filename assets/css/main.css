@@ -445,8 +445,8 @@ html:has(.product-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .partners-grid .partner { height: var(--logo-box-grid); padding: var(--sp-5); border: 1px solid var(--color-line); background: var(--color-bg); }
 .partners-grid .partner img { height: var(--logo-h-grid); max-width: 85%; }
 @media (hover: hover) and (pointer: fine) {
-  .partners-grid .partner:hover { transform: translateY(-4px); box-shadow: var(--sh-3); border-color: var(--color-line-strong); }
-  .partner:hover img { transform: scale(1.04); }
+  .partners-grid a.partner:hover { transform: translateY(-4px); box-shadow: var(--sh-3); border-color: var(--color-line-strong); }
+  a.partner:hover img { transform: scale(1.04); }
 }
 @media (max-width: 560px) {
   .partners-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); }

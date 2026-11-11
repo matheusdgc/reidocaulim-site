@@ -1,6 +1,6 @@
 """Padroniza as logos de clientes e parceiros para o site.
 
-Lê os originais em assets/img/logos-clientes/ (e originais-web/), e grava em assets/img/parceiros/:
+Lê os originais em assets/img/logos-clientes/ (e originais-web/, novas/), e grava em assets/img/parceiros/:
 fundo branco, bordas vazias cortadas, margem igual em volta e altura máxima de 240 px (nítidas em telas de alta densidade), em WebP.
 SVGs são copiados como estão (apenas com as cores fixadas, ver TROUW abaixo).
 
@@ -9,7 +9,7 @@ Uso: python scripts/preparar_logos.py
 import re
 from pathlib import Path
 
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageDraw
 
 RAIZ = Path(__file__).resolve().parent.parent
 ORIGEM = RAIZ / "assets" / "img" / "logos-clientes"
@@ -29,6 +29,14 @@ RASTER = {
     "originais-web/neonutra-preta.webp": "neonutra",
     "originais-web/usidecor-logo.png": "usi-decor",
     "originais-web/globoaves-logo.png": "globoaves",
+    "novas/proenzime.png": "proenzime",
+    "novas/embraupec.png": "embraupec",
+    "novas/mariboi.webp": "mariboi",
+    "novas/alvax.webp": "alvax",
+    "novas/transcolima.webp": "transcolima",
+    "novas/adm-logistica.webp": "adm-logistica",
+    "novas/atr.webp": "atr-transportes",
+    "novas/nordeste.webp": "nordeste-transportes",
 }
 
 # O SVG da Trouw usa variáveis de CSS do site deles; aqui as cores ficam fixas,
@@ -52,7 +60,39 @@ def para_rgb_branco(im):
 
 # Originais com fundo cinza-claro em vez de branco: o fundo vira branco antes do corte,
 # para não aparecer um retângulo acinzentado dentro do card
-CLAREAR_FUNDO = {"univitta-logo.jpg"}
+CLAREAR_FUNDO = {"univitta-logo.jpg", "novas/alvax.webp", "novas/transcolima.webp",
+                 "novas/atr.webp", "novas/nordeste.webp"}
+
+# Logos sobre fundo preto: o fundo vira branco e o brilho neon vira o mesmo brilho sobre branco.
+# Cada uma pode ter uma área protegida (x0, y0, x1, y1), onde o preto é desenho e não fundo.
+FUNDO_PRETO = {"novas/adm-logistica.webp": (780, 200, 890, 300)}  # o "check" dentro do escudo
+
+
+def tirar_fundo_preto(im, protegida=None):
+    """O preto ligado às bordas e os miolos pretos das letras viram branco; os cinzas do desenho ficam.
+    Pixels coloridos escuros (o brilho neon misturado ao preto) são desmisturados do preto e postos sobre branco."""
+    w, h = im.size
+    marca = (255, 0, 255)
+    cheio = im.copy()
+    for canto in ((0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)):
+        if cheio.getpixel(canto) != marca:
+            ImageDraw.floodfill(cheio, canto, marca, thresh=40)
+    px, pc = im.load(), cheio.load()
+    for y in range(h):
+        for x in range(w):
+            if pc[x, y] == marca:
+                px[x, y] = (255, 255, 255)
+                continue
+            r, g, b = px[x, y]
+            m, n = max(r, g, b), min(r, g, b)
+            dentro = protegida and protegida[0] <= x <= protegida[2] and protegida[1] <= y <= protegida[3]
+            if m < 34 and not dentro:
+                px[x, y] = (255, 255, 255)
+            elif m - n > 40 and m < 200:
+                a = m / 255
+                cor = [min(255, c / a) for c in (r, g, b)]
+                px[x, y] = tuple(round(c * a + 255 * (1 - a)) for c in cor)
+    return im
 
 
 def clarear_fundo(im, limite=238):
@@ -72,6 +112,8 @@ def main():
         im = para_rgb_branco(Image.open(ORIGEM / origem))
         if origem in CLAREAR_FUNDO:
             im = clarear_fundo(im)
+        if origem in FUNDO_PRETO:
+            im = tirar_fundo_preto(im, FUNDO_PRETO[origem])
         im = cortar_bordas(im)
         m = round(max(im.size) * MARGEM)
         tela = Image.new("RGB", (im.width + 2 * m, im.height + 2 * m), (255, 255, 255))

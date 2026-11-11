@@ -8,6 +8,14 @@
   {"nome": "Globoaves", "site": "https://globoaves.com.br/", "logo": "assets/img/parceiros/globoaves.webp"},
   {"nome": "Allnova Nutrição Animal", "site": "https://www.allnova.com.br/", "logo": "assets/img/parceiros/allnova.webp"},
   {"nome": "Univittá Saúde Animal", "site": "https://www.univittasaudeanimal.com.br/", "logo": "assets/img/parceiros/univitta.webp"},
+  {"nome": "Embraupec", "logo": "assets/img/parceiros/embraupec.webp"},
+  {"nome": "Proenzime", "logo": "assets/img/parceiros/proenzime.webp"},
+  {"nome": "Mariboi Saúde Animal", "logo": "assets/img/parceiros/mariboi.webp"},
   {"nome": "Silicate", "site": "https://www.silicate.com.br/", "logo": "assets/img/parceiros/silicate.webp"},
-  {"nome": "Usi Decor", "site": "https://www.usidecor.com.br/", "logo": "assets/img/parceiros/usi-decor.webp"}
+  {"nome": "Usi Decor", "site": "https://www.usidecor.com.br/", "logo": "assets/img/parceiros/usi-decor.webp"},
+  {"nome": "Alvax Aditivos", "site": "https://alvaxaditivos.com.br/", "logo": "assets/img/parceiros/alvax.webp"},
+  {"nome": "Transcolima Transportes", "logo": "assets/img/parceiros/transcolima.webp"},
+  {"nome": "ADM Logística", "logo": "assets/img/parceiros/adm-logistica.webp"},
+  {"nome": "ATR Transportes", "logo": "assets/img/parceiros/atr-transportes.webp"},
+  {"nome": "Nordeste Transportes", "logo": "assets/img/parceiros/nordeste-transportes.webp"}
 ]

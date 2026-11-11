@@ -1,5 +1,6 @@
 """Gera a faixa de logos (index.html) e a grade de logos (parceiros.html) a partir de assets/data/parceiros.json.
 
+Parceiro sem "site" no JSON aparece sem link.
 Para incluir um parceiro: coloque a logo em assets/img/logos-clientes/, registre-a em
 scripts/preparar_logos.py, rode esse script, acrescente o parceiro no JSON e rode este.
 
@@ -36,10 +37,14 @@ def versao(logo):
 def link(p, indent, oculto=False):
     e = html.escape
     w, h = medidas(p["logo"])
+    img = (f'<img src="{e(p["logo"])}?v={versao(p["logo"])}" width="{w}" height="{h}" '
+           f'loading="lazy" draggable="false" alt="{e(p["nome"])}">')
+    if not p.get("site"):
+        # Sem site conhecido: a logo aparece, mas não é um link
+        return f'{indent}<li><span class="partner">{img}</span></li>'
     extra = ' tabindex="-1"' if oculto else ""
     return (f'{indent}<li><a class="partner" href="{e(p["site"])}" target="_blank" rel="noopener"{extra} '
-            f'draggable="false" aria-label="Visitar o site da {e(p["nome"])} (abre em nova aba)">'
-            f'<img src="{e(p["logo"])}?v={versao(p["logo"])}" width="{w}" height="{h}" loading="lazy" draggable="false" alt="{e(p["nome"])}"></a></li>')
+            f'draggable="false" aria-label="Visitar o site da {e(p["nome"])} (abre em nova aba)">{img}</a></li>')
 
 
 def substituir(pagina, marcador, bloco):
