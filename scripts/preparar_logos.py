@@ -32,6 +32,8 @@ RASTER = {
     "novas/proenzime.png": "proenzime",
     "novas/embraupec.png": "embraupec",
     "novas/mariboi.webp": "mariboi",
+    "novas/neto.webp": "neto-mococa",
+    "novas/agility.jpg": "grupo-agility",
     "novas/alvax.webp": "alvax",
     "novas/transcolima.webp": "transcolima",
     "novas/adm-logistica.webp": "adm-logistica",
@@ -60,7 +62,7 @@ def para_rgb_branco(im):
 
 # Originais com fundo cinza-claro em vez de branco: o fundo vira branco antes do corte,
 # para não aparecer um retângulo acinzentado dentro do card
-CLAREAR_FUNDO = {"univitta-logo.jpg", "novas/alvax.webp", "novas/transcolima.webp",
+CLAREAR_FUNDO = {"univitta-logo.jpg", "novas/agility.jpg", "novas/alvax.webp", "novas/transcolima.webp",
                  "novas/atr.webp", "novas/nordeste.webp"}
 
 # Logos sobre fundo preto: o fundo vira branco e o brilho neon vira o mesmo brilho sobre branco.

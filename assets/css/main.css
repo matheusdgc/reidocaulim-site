@@ -83,6 +83,8 @@ p { text-wrap: pretty; }
 .header-row { display: flex; align-items: center; justify-content: space-between; height: var(--header-h); }
 .brand img { height: calc(var(--header-h) - var(--sp-3)); width: auto; }
 .nav-list { display: flex; align-items: center; gap: var(--sp-6); }
+/* Menu do header em caixa alta, com o respiro entre letras que a caixa alta pede */
+.nav-list a { text-transform: uppercase; letter-spacing: var(--ls-caps); white-space: nowrap; }
 .nav-list a:not(.btn) {
   position: relative; display: inline-block; padding-block: var(--sp-2);
   font-weight: 600; font-size: var(--fs-small); text-decoration: none; color: var(--color-navy);
@@ -94,7 +96,8 @@ p { text-wrap: pretty; }
 .nav-list a:not(.btn):hover::after, .nav-list a[aria-current="true"]::after, .nav-list a[aria-current="page"]::after { transform: scaleX(1); }
 .nav-toggle { display: none; }
 
-@media (max-width: 899px) {
+/* Em caixa alta o menu não cabe ao lado da logo abaixo de 1024 px: vira o botão de menu */
+@media (max-width: 1023px) {
   :root { --header-h: 72px; }
   .nav-toggle {
     display: grid; place-items: center; width: 48px; height: 48px; border: 0; border-radius: var(--r-sm);
