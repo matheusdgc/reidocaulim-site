@@ -262,14 +262,16 @@ p { text-wrap: pretty; }
 /* Aplicações do caulim */
 .uses { display: grid; gap: var(--sp-8); margin-top: var(--sp-9); }
 .use-feed { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--sp-8); align-items: center; }
-.use-photos { position: relative; padding-bottom: var(--sp-8); }
+.use-photos { display: grid; }
 .photo { border-radius: var(--r-md); overflow: hidden; }
 .photo img { width: 100%; height: 100%; object-fit: cover; }
 .photo-main { aspect-ratio: 3 / 2; }
-.photo-inset {
-  position: absolute; right: calc(var(--sp-6) * -1); bottom: 0; width: 46%; aspect-ratio: 4 / 3;
-  border: 6px solid var(--color-bg); border-radius: var(--r-md); box-shadow: var(--sh-3);
+/* Fileira de aves, suínos e peixes avançando sobre a borda de baixo da foto do gado */
+.photo-row {
+  position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-3);
+  margin: calc(var(--photo-row-overlap) * -1) var(--sp-5) 0;
 }
+.photo-thumb { aspect-ratio: 4 / 3; border: var(--photo-frame) solid var(--color-bg); box-shadow: var(--sh-3); }
 .use-text h3, .use-card h3 { margin-bottom: var(--sp-3); }
 .use-text > p, .use-card > p { color: var(--color-muted); margin-bottom: var(--sp-4); }
 
@@ -390,7 +392,6 @@ html:has(.product-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
 
 @media (max-width: 959px) {
   .product, .use-feed { grid-template-columns: 1fr; gap: var(--sp-6); }
-  .photo-inset { right: 0; }
   .use-band { height: 300px; }
   .use-card { grid-column: 1 / -1; grid-row: 2; margin: calc(var(--sp-8) * -1) var(--sp-4) 0; }
   .specs { grid-template-columns: 1fr 1fr; }
@@ -398,6 +399,7 @@ html:has(.product-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
   .specs > div:nth-child(n+3) { border-top: 1px solid var(--color-line); }
 }
 @media (max-width: 560px) {
+  .photo-row { gap: var(--sp-2); margin-inline: var(--sp-3); }
   .specs { grid-template-columns: 1fr; }
   .specs > div + div { border-left: 0; border-top: 1px solid var(--color-line); }
   .powder-label { display: none; }

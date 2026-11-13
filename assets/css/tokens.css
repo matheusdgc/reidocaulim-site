@@ -130,6 +130,9 @@
   --zoom-from: 1.12;
   --zoom-hero-from: 1.15;
   --parallax-scale: 1.18;
+  /* Fotos de nutrição animal */
+  --photo-row-overlap: 48px;
+  --photo-frame: 5px;
   /* Selo de 20 anos */
   --seal-flag-w: 96px;
   --fs-seal: clamp(3.5rem, 2.6rem + 3vw, 4.75rem);
