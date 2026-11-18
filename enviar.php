@@ -7,10 +7,10 @@
 declare(strict_types=1);
 
 // ===================== CONFIGURAÇÃO =====================
-// TODO: e-mail que vai RECEBER as mensagens do site
-const DESTINO = 'contato@seudominio.com.br';
-// TODO: remetente técnico. Use um endereço do MESMO domínio do site, senão o e-mail cai no spam.
-const REMETENTE = 'site@seudominio.com.br';
+// E-mail que RECEBE as mensagens do site (na Hostinger, encaminha para o e-mail pessoal)
+const DESTINO = 'contato@sbcaulim.com';
+// Remetente técnico: uma caixa que exista na Hostinger (aqui, a mesma que recebe), senão o e-mail cai no spam.
+const REMETENTE = 'contato@sbcaulim.com';
 const NOME_SITE = 'Site SB Rei do Caulim';
 // Algumas hospedagens exigem o parâmetro -f; se o envio falhar, troque para false.
 const USAR_PARAMETRO_F = true;

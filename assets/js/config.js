@@ -11,7 +11,7 @@ window.SITE_CONFIG = {
   // Mensagem que já vem escrita ao abrir o WhatsApp
   whatsappMensagem: 'Olá! Vim pelo site da SB Rei do Caulim e gostaria de uma cotação.',
   // TODO: e-mail público de contato
-  email: 'contato@seudominio.com.br',
+  email: 'contato@sbcaulim.com',
   cidade: 'Itapeva/SP',
   cnpj: '46.640.930/0001-00',
   // Modo demonstração: o formulário valida, mas não envia e-mail.

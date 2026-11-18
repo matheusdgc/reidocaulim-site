@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# TODO: trocar pelo domínio real
-Sitemap: https://www.seudominio.com.br/sitemap.xml
+Sitemap: https://sbreidocaulim.com.br/sitemap.xml
